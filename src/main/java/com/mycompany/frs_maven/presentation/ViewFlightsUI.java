@@ -28,12 +28,10 @@ public class ViewFlightsUI extends JInternalFrame {
 		super("All Flights", false, true);
 		FlightMgr flightMgr = new FlightMgr();
 		Flight[] flights = new Flight[] {};
-		System.out.println("test1");
 		try {
 			flights = flightMgr.fetchAllFlights();
 		}
 		catch(Exception e) {
-			System.out.println("test2");
 			System.out.println(e.getMessage());
 		}
 		

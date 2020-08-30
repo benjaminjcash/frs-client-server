@@ -29,10 +29,8 @@ public class Factory {
 	private String getImplName(String name) throws Exception {
 		Properties props = new Properties();
 		FileInputStream fis = new FileInputStream("src/main/java/com/mycompany/frs_maven/service/properties.txt");
-		System.out.println(fis);
 		props.load(fis);
 		fis.close();
-		System.out.println(props.getProperty(name));
 		return props.getProperty(name);
 	}
 }
