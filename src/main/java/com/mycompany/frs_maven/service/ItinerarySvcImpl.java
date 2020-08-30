@@ -1,6 +1,7 @@
 package com.mycompany.frs_maven.service;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.mycompany.frs_maven.domain.Itinerary;
 import com.mycompany.frs_maven.domain.Traveler;
 import com.mycompany.frs_maven.exceptions.RecordNotFoundException;

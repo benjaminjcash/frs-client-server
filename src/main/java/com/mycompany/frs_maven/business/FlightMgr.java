@@ -6,10 +6,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.mycompany.frs_maven.domain.Flight;
 import com.mycompany.frs_maven.exceptions.ServiceLoadException;
 
 public class FlightMgr {
+	static private Logger logger = LogManager.getLogger();
 	private IFlightSvc flightSvc;
 	
 	private void setup() throws ServiceLoadException {
@@ -52,7 +57,7 @@ public class FlightMgr {
 			flights = Arrays.asList(fs);	
 		}
 		catch(Exception e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 		
 		// Filter by departure code
@@ -63,8 +68,8 @@ public class FlightMgr {
 			
 			if(departureCode.equals(dc)) {
 				temp.add(curr);
-				String code = flights.get(i).getFlightNumber(); 
-				System.out.println("Codes matched for flight " + code);
+				String code = flights.get(i).getFlightNumber();
+				logger.info("Codes matched for flight " + code);
 			}
 		}
 		flights = temp;
@@ -80,7 +85,7 @@ public class FlightMgr {
 			if(d.equals(departureDate)) {
 				temp2.add(curr);
 				String code = flights.get(i).getFlightNumber(); 
-				System.out.println("Codes matched for flight " + code);
+				logger.info("Codes matched for flight " + code);
 			}
 		}
 		flights = temp2;

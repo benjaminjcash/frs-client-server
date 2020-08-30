@@ -10,11 +10,15 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.mycompany.frs_maven.exceptions.RecordNotFoundException;
 import com.mycompany.frs_maven.domain.Flight;
 import com.mycompany.frs_maven.domain.Itinerary;
 
 public class TravelerSvcImpl implements ITravelerSvc {
+	static private Logger logger = LogManager.getLogger();
 	
 	public Traveler fetchProfile(String username) {
 		Traveler traveler = new Traveler();
@@ -26,11 +30,11 @@ public class TravelerSvcImpl implements ITravelerSvc {
 			return null;
 		}
 		catch(IOException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			return null;
 		}
 		catch(ClassNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			return null;
 		}
 		return traveler;
@@ -42,15 +46,15 @@ public class TravelerSvcImpl implements ITravelerSvc {
 			didWrite = addRecord(traveler);
 		}
 		catch(RecordNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didWrite = false;
 		}
 		catch(IOException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didWrite = false;
 		}
 		catch(ClassNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didWrite = false;
 		}
 		return didWrite;
@@ -62,15 +66,15 @@ public class TravelerSvcImpl implements ITravelerSvc {
 			didDelete = deleteRecord(username);
 		}
 		catch(IOException e) {
-			System.out.println(e.getMessage());	
+			logger.error(e.getMessage());
 			didDelete = false;
 		}
 		catch(ClassNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didDelete = false;
 		}
 		catch(RecordNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didDelete = false;
 		}
 		return didDelete;
@@ -82,7 +86,7 @@ public class TravelerSvcImpl implements ITravelerSvc {
 			travelers = getRecords();
 		}
 		catch(Exception e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 		return travelers;
 	}
@@ -94,15 +98,15 @@ public class TravelerSvcImpl implements ITravelerSvc {
 			toBeUpdated = getRecord(username);
 		}
 		catch(RecordNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didWrite = false;
 		}
 		catch(IOException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didWrite = false;
 		}
 		catch(ClassNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didWrite = false;
 		}
 		
@@ -114,15 +118,15 @@ public class TravelerSvcImpl implements ITravelerSvc {
 			addRecord(toBeUpdated);
 		}
 		catch(RecordNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didWrite = false;
 		}
 		catch(IOException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didWrite = false;
 		}
 		catch(ClassNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didWrite = false;
 		}
 		
@@ -138,11 +142,11 @@ public class TravelerSvcImpl implements ITravelerSvc {
 			createProfile(toBeUpdated);
 		}
 		catch(IOException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didWrite = false;
 		}
 		catch(ClassNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didWrite = false;
 		}
 		return didWrite;

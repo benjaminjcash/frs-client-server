@@ -2,11 +2,13 @@ package com.mycompany.frs_maven.domain;
 import java.time.LocalDateTime;
 import java.time.Month;
 import junit.framework.TestCase;
+import org.apache.logging.log4j.*;
 
 public class FlightTest extends TestCase {
+	static private Logger logger = LogManager.getLogger();
 	
 	public void testEquals() {
-		System.out.println("starting FlightTest.testEquals");
+		logger.info("starting FlightTest.testEquals");
 		
 		Flight f1 = new Flight();
 		f1.setFlightNumber("101");
@@ -20,11 +22,11 @@ public class FlightTest extends TestCase {
 		f4.setFlightNumber("750");
 		assertFalse("f4 equals f3", f4.equals(f3));
 		
-		System.out.println("FlightTest.testEquals passed!");
+		logger.info("FlightTest.testEquals passed!");
 	}
 	
 	public void testValidate() {
-		System.out.println("starting FlightTest.testValidate");
+		logger.info("starting FlightTest.testValidate");
 		
 		Flight f1 = new Flight();
 		f1.setAirlineCode("WN");
@@ -39,6 +41,6 @@ public class FlightTest extends TestCase {
 		f1.setArrivalTime(arr);
 		assertTrue("f1 is not a valid Flight", f1.validate());
 		
-		System.out.println("FlightTest.testValidate passed!");
+		logger.info("FlightTest.testValidate passed!");
 	}
 }

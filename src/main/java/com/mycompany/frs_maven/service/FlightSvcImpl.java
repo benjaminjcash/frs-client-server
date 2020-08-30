@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,7 +19,8 @@ import com.mycompany.frs_maven.exceptions.RecordNotFoundException;
 import com.mycompany.frs_maven.domain.Flight;
 
 public class FlightSvcImpl implements IFlightSvc {
-	
+
+	static private Logger logger = LogManager.getLogger();
 	private Map<String, String> airports = new HashMap<>();
 	private Map<String, String> airlines = new HashMap<>();
 	
@@ -25,15 +30,15 @@ public class FlightSvcImpl implements IFlightSvc {
 			flight = getRecord(flightNumber);
 		}
 		catch(RecordNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			return null;
 		}
 		catch(IOException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			return null;
 		}
 		catch(ClassNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			return null;
 		}
 		return flight;
@@ -46,15 +51,15 @@ public class FlightSvcImpl implements IFlightSvc {
 			didWrite = addRecord(flight);
 		}
 		catch(IOException e) {
-			System.out.println(e.getMessage());	
+			logger.error(e.getMessage());	
 			didWrite = false;
 		}
 		catch(ClassNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didWrite = false;
 		}
 		catch(RecordNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didWrite = false;
 		}
 		return didWrite;
@@ -66,15 +71,15 @@ public class FlightSvcImpl implements IFlightSvc {
 			didDelete = deleteRecords(flightNumber);
 		}
 		catch(IOException e) {
-			System.out.println(e.getMessage());	
+			logger.error(e.getMessage());
 			didDelete = false;
 		}
 		catch(ClassNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didDelete = false;
 		}
 		catch(RecordNotFoundException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			didDelete = false;
 		}
 		return didDelete;
@@ -86,7 +91,7 @@ public class FlightSvcImpl implements IFlightSvc {
 			flights = getRecords();
 		}
 		catch(Exception e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 		return flights;
 	}

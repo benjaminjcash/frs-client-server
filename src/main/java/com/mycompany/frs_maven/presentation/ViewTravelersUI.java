@@ -8,6 +8,10 @@ import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.mycompany.frs_maven.business.TravelerMgr;
 import com.mycompany.frs_maven.domain.Traveler;
 
@@ -16,6 +20,7 @@ public class ViewTravelersUI extends JInternalFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	static private Logger logger = LogManager.getLogger();
 
 	public ViewTravelersUI() {
 		super("All Travelers", false, true);
@@ -25,7 +30,7 @@ public class ViewTravelersUI extends JInternalFrame {
 			travelers = travelerMgr.fetchAllProfiles();
 		}
 		catch(Exception e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 		
 		Container container = getContentPane();
@@ -84,7 +89,7 @@ public class ViewTravelersUI extends JInternalFrame {
 			travelerMgr.deleteProfile(username);
 		}
 		catch (Exception e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 	}
 }

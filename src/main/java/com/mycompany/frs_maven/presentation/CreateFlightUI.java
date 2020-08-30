@@ -8,6 +8,10 @@ import java.time.Month;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.mycompany.frs_maven.business.FlightMgr;
 import com.mycompany.frs_maven.domain.Flight;
 import com.mycompany.frs_maven.service.Factory;
@@ -53,6 +57,7 @@ public class CreateFlightUI extends JInternalFrame {
 	private JTextField businessTicketFld = new JTextField(10);
 	private JTextField economyTicketFld = new JTextField(10);
 	private JButton submitBtn = new JButton("Submit");
+	static private Logger logger = LogManager.getLogger();
 	
 	public CreateFlightUI() {
 		super("Create Flight", false, true);
@@ -133,7 +138,7 @@ public class CreateFlightUI extends JInternalFrame {
 															Double.parseDouble(economyTicketFld.getText()));
 						flightMgr.publishFlight(newFlight);
 					}
-					catch (Exception e) { System.out.println(e.getMessage()); }
+					catch (Exception e) { logger.fatal(e.getMessage()); }
 					dispose();
 					MainUI.openViewFlightsUI();
 				}
@@ -153,7 +158,7 @@ public class CreateFlightUI extends JInternalFrame {
 			flightSvc.printAllFlights();
 			System.out.println();
 		}
-		catch(Exception e) { System.out.println(e); }
+		catch(Exception e) { logger.fatal(e.getMessage()); }
 	}
 	
 }

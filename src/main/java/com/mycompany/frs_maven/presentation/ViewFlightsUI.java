@@ -13,6 +13,9 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.mycompany.frs_maven.business.FlightMgr;
 import com.mycompany.frs_maven.domain.Flight;
 
@@ -23,6 +26,7 @@ public class ViewFlightsUI extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private Map<String, String> airports = new HashMap<>();
 	private Map<String, String> airlines = new HashMap<>();
+	static private Logger logger = LogManager.getLogger();
 	
 	public ViewFlightsUI() {
 		super("All Flights", false, true);
@@ -32,7 +36,7 @@ public class ViewFlightsUI extends JInternalFrame {
 			flights = flightMgr.fetchAllFlights();
 		}
 		catch(Exception e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 		
 		Container container = getContentPane();
@@ -109,7 +113,7 @@ public class ViewFlightsUI extends JInternalFrame {
 			flightMgr.deleteFlight(flightNumber);
 		}
 		catch (Exception e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 	}
 }

@@ -8,13 +8,17 @@ import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.mycompany.frs_maven.business.TravelerMgr;
 import com.mycompany.frs_maven.domain.Traveler;
 import com.mycompany.frs_maven.service.Factory;
 import com.mycompany.frs_maven.service.ITravelerSvc;
 
 public class CreateTravelerUI extends JInternalFrame {
-	
+	static private Logger logger = LogManager.getLogger();
 	/**
 	 * 
 	 */
@@ -68,7 +72,7 @@ public class CreateTravelerUI extends JInternalFrame {
 						try {
 							travelerMgr.createProfile(newTraveler);
 						}
-						catch (Exception e) { System.out.println(e.getMessage()); }
+						catch (Exception e) { logger.error(e.getMessage()); }
 						printTravelers();
 						dispose();
 						MainUI.openLoginUI();
@@ -88,6 +92,6 @@ public class CreateTravelerUI extends JInternalFrame {
 			travelerSvc.printAllTravelers();
 			System.out.println();
 		}
-		catch(Exception e) { System.out.println(e); }
+		catch(Exception e) { logger.error(e.getMessage()); }
 	}
 }

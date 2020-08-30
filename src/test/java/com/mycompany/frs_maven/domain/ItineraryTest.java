@@ -1,9 +1,14 @@
 package com.mycompany.frs_maven.domain;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import junit.framework.TestCase;
 
 public class ItineraryTest extends TestCase {
+	static private Logger logger = LogManager.getLogger();
+	
 	public void testEquals() {
-		System.out.println("starting ItineraryTest.testEquals");
+		logger.info("starting ItineraryTest.testEquals");
 		
 		Flight f1 = new Flight();
 		f1.setFlightNumber("101");
@@ -27,11 +32,11 @@ public class ItineraryTest extends TestCase {
 		assertFalse("i2 equals i1", i2.equals(i1));
 		assertTrue("i3 equals i1", i3.equals(i1));
 		
-		System.out.println("ItineraryTest.testEquals passed!");
+		logger.info("ItineraryTest.testEquals passed!");
 	}
 	
 	public void testValidate() {
-		System.out.println("starting ItineraryTest.testValidate");
+		logger.info("starting ItineraryTest.testValidate");
 		
 		Itinerary i1 = new Itinerary();
 		i1.setId("0001");
@@ -46,6 +51,6 @@ public class ItineraryTest extends TestCase {
 		
 		assertTrue("i1 is not valid Itinerary", i1.validate());
 		
-		System.out.println("ItineraryTest.testValidate passed!");
+		logger.info("ItineraryTest.testValidate passed!");
 	}
 }

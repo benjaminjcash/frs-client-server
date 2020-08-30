@@ -1,9 +1,14 @@
 package com.mycompany.frs_maven.domain;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import junit.framework.TestCase;
 
 public class TravelerTest extends TestCase {
+	static private Logger logger = LogManager.getLogger();
+	
 	public void testEquals() {
-		System.out.println("starting TravelerTest.testEquals");
+		logger.info("starting TravelerTest.testEquals");
 		
 		Traveler t1 = new Traveler();
 		t1.setName("Billy Bob");
@@ -20,11 +25,11 @@ public class TravelerTest extends TestCase {
 		assertFalse("t2 equals t1", t2.equals(t1));
 		assertTrue("t3 does not equal t1", t3.equals(t1));
 		
-		System.out.println("TravelerTest.testEquals passed!");
+		logger.info("TravelerTest.testEquals passed!");
 	}
 	
 	public void testValidate() {
-		System.out.println("starting TravelerTest.testValidate");
+		logger.info("starting TravelerTest.testValidate");
 		
 		Traveler t1 = new Traveler();
 		t1.setName("Francis Drake");
@@ -41,6 +46,6 @@ public class TravelerTest extends TestCase {
 		
 		assertFalse("t2 is a valid Traveler", t2.validate());
 		
-		System.out.println("TravelerTest.testEquals passed!");
+		logger.info("TravelerTest.testEquals passed!");
 	}
 }

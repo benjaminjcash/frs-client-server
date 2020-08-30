@@ -2,6 +2,9 @@ package com.mycompany.frs_maven.presentation;
 
 import javax.swing.*;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.mycompany.frs_maven.business.LoginMgr;
 import com.mycompany.frs_maven.business.TravelerMgr;
 import com.mycompany.frs_maven.domain.Traveler;
@@ -13,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginUI extends JInternalFrame {
+	static private Logger logger = LogManager.getLogger();
 	/**
 	 * 
 	 */
@@ -48,13 +52,13 @@ public class LoginUI extends JInternalFrame {
 					boolean success = false;
 
 					try { success = loginMgr.login(usrname, pswrd); }
-					catch (RecordNotFoundException e) { System.out.println(e.getMessage()); }
-					catch (WrongPasswordException e) { System.out.println(e.getMessage()); }
-					catch (Exception e) { System.out.println(e.getMessage()); }
+					catch (RecordNotFoundException e) { logger.error(e.getMessage()); }
+					catch (WrongPasswordException e) { logger.error(e.getMessage()); }
+					catch (Exception e) { logger.error(e.getMessage()); }
 					
 					if(success) {
 						try { user = travelerMgr.fetchProfile(usrname); }
-						catch (ServiceLoadException e) { System.out.println(e.getMessage()); }
+						catch (ServiceLoadException e) { logger.error(e.getMessage()); }
 						
 						System.out.println("Welcome back " + user.getName() + ".");
 						dispose();

@@ -3,6 +3,10 @@ package com.mycompany.frs_maven.service;
 import java.io.FileInputStream;
 import java.lang.reflect.Constructor;
 import java.util.Properties;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.mycompany.frs_maven.exceptions.ServiceLoadException;
 
 public class Factory {
