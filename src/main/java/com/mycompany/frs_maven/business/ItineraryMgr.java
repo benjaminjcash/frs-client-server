@@ -1,8 +1,5 @@
 package com.mycompany.frs_maven.business;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.mycompany.frs_maven.domain.Itinerary;
 import com.mycompany.frs_maven.exceptions.RecordNotFoundException;
 import com.mycompany.frs_maven.exceptions.ServiceLoadException;

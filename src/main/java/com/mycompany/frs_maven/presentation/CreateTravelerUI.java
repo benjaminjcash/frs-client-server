@@ -39,7 +39,6 @@ public class CreateTravelerUI extends JInternalFrame {
 	
 	public CreateTravelerUI() {
 		super("Create Traveler", false, true);
-		printTravelers();
 		
 		Container container = getContentPane();
 		GridLayout layout = new GridLayout(7, 2);

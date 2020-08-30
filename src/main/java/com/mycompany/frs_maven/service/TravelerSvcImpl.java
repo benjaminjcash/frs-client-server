@@ -1,7 +1,7 @@
 package com.mycompany.frs_maven.service;
 import com.mycompany.frs_maven.domain.Traveler;
 
-
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -86,7 +86,7 @@ public class TravelerSvcImpl implements ITravelerSvc {
 			travelers = getRecords();
 		}
 		catch(Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e);
 		}
 		return travelers;
 	}
@@ -153,21 +153,28 @@ public class TravelerSvcImpl implements ITravelerSvc {
 	}
 	
 	public Traveler[] getRecords() throws IOException, ClassNotFoundException, RecordNotFoundException {
+		Traveler[] travelers = new Traveler[0];
 		String filePath = "src/main/java/com/mycompany/frs_maven/data/travelers.data";
-		ObjectInputStream input = new ObjectInputStream(new FileInputStream(filePath));
-		Traveler[] travelers = (Traveler[]) input.readObject();
-		input.close();
+		File file = new File(filePath);
+		if(file.length() > 0) {
+			ObjectInputStream input = new ObjectInputStream(new FileInputStream(filePath));
+			travelers = (Traveler[]) input.readObject();
+			input.close();
+		}
  		return travelers;
 	}
 	
 	public boolean addRecords(Traveler[] data) throws IOException, ClassNotFoundException {
 		boolean success = true;
 		String filePath = "src/main/java/com/mycompany/frs_maven/data/travelers.data";
-		ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filePath));
-		output.writeObject(data);
-		output.flush();
-		output.close();
-		return success;	
+		File file = new File(filePath);
+		if(file.length() > 0) {
+			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filePath));
+			output.writeObject(data);
+			output.flush();
+			output.close();
+		}
+		return success;
 	}
 	
 	private Traveler getRecord(String username) throws IOException, ClassNotFoundException, RecordNotFoundException {
@@ -215,7 +222,7 @@ public class TravelerSvcImpl implements ITravelerSvc {
 			}
 		}
 		int size = currentRecords.length - indices.size();
-		if(size > 0) {
+		if(indices.size() > 0) {
 			Traveler[] newRecords = new Traveler[size];
 			int j = 0;
 			for(int i = 0; i < currentRecords.length; i++) {
