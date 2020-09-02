@@ -3,6 +3,8 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -25,20 +27,21 @@ public class ViewTravelersUI extends JInternalFrame {
 	public ViewTravelersUI() {
 		super("All Travelers", false, true);
 		TravelerMgr travelerMgr = new TravelerMgr();
-		Traveler[] travelers = new Traveler[] {};
+		ArrayList<Traveler> travelers = new ArrayList<Traveler>();
 		try {
 			travelers = travelerMgr.fetchAllProfiles();
+			
 		}
 		catch(Exception e) {
 			logger.error(e.getMessage());
 		}
 		
 		Container container = getContentPane();
-		GridLayout layout = new GridLayout(travelers.length, 1);
+		GridLayout layout = new GridLayout(travelers.size(), 1);
 		container.setLayout(layout);
 		
-		for(Integer i = 0; i < travelers.length; i++) {
-			Traveler traveler = travelers[i];
+		for(Integer i = 0; i < travelers.size(); i++) {
+			Traveler traveler = travelers.get(i);
 			JPanel panel = new JPanel();
 			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 			

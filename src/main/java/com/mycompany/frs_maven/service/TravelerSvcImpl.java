@@ -1,20 +1,13 @@
 package com.mycompany.frs_maven.service;
 import com.mycompany.frs_maven.domain.Traveler;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.mycompany.frs_maven.exceptions.RecordNotFoundException;
-import com.mycompany.frs_maven.domain.Flight;
 import com.mycompany.frs_maven.domain.Itinerary;
 
 public class TravelerSvcImpl implements ITravelerSvc {
@@ -80,8 +73,8 @@ public class TravelerSvcImpl implements ITravelerSvc {
 		return didDelete;
 	}
 	
-	public Traveler[] fetchAllProfiles() {
-		Traveler[] travelers = new Traveler[]{};
+	public ArrayList<Traveler> fetchAllProfiles() {
+		ArrayList<Traveler> travelers = new ArrayList<Traveler>();
 		try {
 			travelers = getRecords();
 		}
@@ -133,7 +126,7 @@ public class TravelerSvcImpl implements ITravelerSvc {
 		return didWrite;
 	}
 	
-	public boolean updateItineraryList(String username, Itinerary[] list) {
+	public boolean updateItineraryList(String username, ArrayList<Itinerary> list) {
 		boolean didWrite = true;
 		Traveler toBeUpdated = fetchProfile(username);
 		deleteProfile(username);
@@ -152,135 +145,41 @@ public class TravelerSvcImpl implements ITravelerSvc {
 		return didWrite;
 	}
 	
-	public Traveler[] getRecords() throws IOException, ClassNotFoundException, RecordNotFoundException {
-		Traveler[] travelers = new Traveler[0];
-		String filePath = "src/main/java/com/mycompany/frs_maven/data/travelers.data";
-		File file = new File(filePath);
-		if(file.length() > 0) {
-			ObjectInputStream input = new ObjectInputStream(new FileInputStream(filePath));
-			travelers = (Traveler[]) input.readObject();
-			input.close();
-		}
+	public ArrayList<Traveler> getRecords() throws IOException, ClassNotFoundException, RecordNotFoundException {
+		ArrayList<Traveler> travelers = new ArrayList<Traveler>();
+		// retrieve data
  		return travelers;
 	}
 	
-	public boolean addRecords(Traveler[] data) throws IOException, ClassNotFoundException {
+	public boolean addRecords(ArrayList<Traveler> data) throws IOException, ClassNotFoundException {
 		boolean success = true;
-		String filePath = "src/main/java/com/mycompany/frs_maven/data/travelers.data";
-		File file = new File(filePath);
-		if(file.length() > 0) {
-			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filePath));
-			output.writeObject(data);
-			output.flush();
-			output.close();
-		}
+		// write data
 		return success;
 	}
 	
 	private Traveler getRecord(String username) throws IOException, ClassNotFoundException, RecordNotFoundException {
-		Traveler[] allRecords = getRecords();
 		Traveler requestedTraveler = new Traveler();
-		if(allRecords.length > 0) {
-			for(Traveler t: allRecords) {
-				String fetchedUsername = t.getUsername();
-				if(username.equals(fetchedUsername)) {
-					requestedTraveler = t;
-				}
-			}
-		}
-		if(requestedTraveler.getUsername() == null) {
-			throw new RecordNotFoundException("No record found");
-		}
+		// retrieve data
 		return requestedTraveler;
 	}
 	
 	private boolean addRecord(Traveler data) throws IOException, ClassNotFoundException, RecordNotFoundException {
 		boolean success = true;
-		Traveler[] currentRecords = getRecords();
-		int size = currentRecords.length + 1;
-		Traveler[] newRecords = new Traveler[size];
-		for(int i = 0; i < newRecords.length; i++) {
-			if(i == 0) {
-				newRecords[0] = data;
-			} else {
-				newRecords[i] = currentRecords[i-1];
-			}
-		}
-		success = addRecords(newRecords);
+		// write data
 		return success;
 	}
 	
 	private boolean deleteRecord(String username) throws IOException, ClassNotFoundException, RecordNotFoundException {
 		boolean success = true;
-		
-		Traveler[] currentRecords = getRecords();
-		List<Integer> indices = new ArrayList<>();
-		for(int i = 0; i < currentRecords.length; i++) {
-			String currUsername = currentRecords[i].getUsername();
-			if(currUsername.equals(username)) {
-				indices.add(i);
-			}
-		}
-		int size = currentRecords.length - indices.size();
-		if(indices.size() > 0) {
-			Traveler[] newRecords = new Traveler[size];
-			int j = 0;
-			for(int i = 0; i < currentRecords.length; i++) {
-				if(!indices.contains(i)) {
-					newRecords[j] = currentRecords[i];
-					j++;
-				}
-			}
-			addRecords(newRecords);
-		} else {
-			throw new RecordNotFoundException("No record found");
-		}
-		
+		// delete data
 		return success;
 	}
 	
 	public void printAllTravelers() throws IOException, ClassNotFoundException, RecordNotFoundException {
-		Traveler[] allTravelers = getRecords();
-		System.out.println("=== All Travelers ===");
-		System.out.println("");		
-		for(int i = 0; i < allTravelers.length; i++) {
-			Traveler curr = allTravelers[i];
-			System.out.println((i + 1) + ". " + curr.getName());
-			System.out.println("   Address: " + curr.getAddress());
-			System.out.println("   Username: " + curr.getUsername());
-			System.out.println("   Password: " + curr.getPassword());
-			System.out.println("   Credit Card Number: " + curr.getCreditCardNumber());
-			System.out.println("   Credit Card Expiration Date: " + curr.getExpirationDate());
-			System.out.println("");
-		}
+		// print data
 	}
 	
 	public void printItineraries(String username) throws IOException, ClassNotFoundException, RecordNotFoundException {
-		Traveler traveler = fetchProfile(username);
-		
-		if(traveler == null) {
-			throw new RecordNotFoundException("profile not found");
-		}
-		
-		System.out.println("=== " + traveler.getName() + "'s Itineraries ===");
-		Itinerary[] il = traveler.getItineraryList();
-		
-		if(il == null) {
-			throw new RecordNotFoundException("no itineraries found");
-		}
-		
-		for(int i = 0; i < il.length; i++) {
-			Itinerary cr = il[i];
-			System.out.println((i + 1) + ". Itinerary " + cr.getId());
-			Flight[] fls = cr.getFlights();
-			
-			if(fls == null) {
-				throw new RecordNotFoundException("no flights found");
-			}
-				
-			for(int j = 0; j < fls.length; j++) {
-				System.out.println("  Flight " + (j + 1) + ": " + fls[j].getFlightNumber());
-			}
-		}
+		// print data
 	}
 }

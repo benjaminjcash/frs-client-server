@@ -1,7 +1,7 @@
 package com.mycompany.frs_maven.business;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
 
 import com.mycompany.frs_maven.domain.Traveler;
 import com.mycompany.frs_maven.exceptions.ServiceLoadException;
@@ -30,7 +30,7 @@ public class TravelerMgr {
 		return travelerSvc.deleteProfile(username);
 	}
 	
-	public Traveler[] fetchAllProfiles() throws ServiceLoadException {
+	public ArrayList<Traveler> fetchAllProfiles() throws ServiceLoadException {
 		setup();
 		return travelerSvc.fetchAllProfiles();
 	}

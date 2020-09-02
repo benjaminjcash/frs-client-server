@@ -1,6 +1,7 @@
 package com.mycompany.frs_maven.domain; 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Itinerary implements Serializable {
 	/**
@@ -14,7 +15,7 @@ public class Itinerary implements Serializable {
 	/* Properties */
 	private String id;
 	private Double totalCost;
-	private Flight[] flights;
+	private ArrayList<Flight> flights;
 	private String status;
 	
 	/* Getters and Setters */
@@ -32,10 +33,10 @@ public class Itinerary implements Serializable {
 		this.totalCost = total;
 	}
 	
-	public Flight[] getFlights() {
+	public ArrayList<Flight> getFlights() {
 		return this.flights;
 	}
-	public void setFlights(Flight[] flights) {
+	public void setFlights(ArrayList<Flight> flights) {
 		this.flights = flights;
 	}
 	

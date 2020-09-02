@@ -1,10 +1,10 @@
 package com.mycompany.frs_maven.business;
 import com.mycompany.frs_maven.service.Factory;
+
 import com.mycompany.frs_maven.service.IFlightSvc;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -43,7 +43,7 @@ public class FlightMgr {
 		return flightSvc.createFlight(flightNumber, airlineCode, departureCode, departureTime, arrivalCode, arrivalTime, businessTicket, economyTicket);
 	}
 	
-	public Flight[] fetchAllFlights() throws ServiceLoadException {
+	public ArrayList<Flight> fetchAllFlights() throws ServiceLoadException {
 		setup();
 		return flightSvc.fetchAllFlights();
 	}
@@ -53,8 +53,7 @@ public class FlightMgr {
 		
 		try {
 			setup();
-			Flight[] fs = flightSvc.getRecords();
-			flights = Arrays.asList(fs);	
+			flights = flightSvc.getRecords();
 		}
 		catch(Exception e) {
 			logger.error(e.getMessage());

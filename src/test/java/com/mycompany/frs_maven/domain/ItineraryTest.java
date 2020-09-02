@@ -1,4 +1,6 @@
 package com.mycompany.frs_maven.domain;
+import java.util.ArrayList;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +17,9 @@ public class ItineraryTest extends TestCase {
 		Flight f2 = new Flight();
 		f2.setFlightNumber("999");
 		
-		Flight[] fs1 = new Flight[] { f1, f2 };
+		ArrayList<Flight> fs1 = new ArrayList<Flight>();
+		fs1.add(f1);
+		fs1.add(f2);
 		
 		Itinerary i1 = new Itinerary();
 		i1.setId("0012");
@@ -44,7 +48,9 @@ public class ItineraryTest extends TestCase {
 		
 		Flight f1 = new Flight();
 		Flight f2 = new Flight();
-		Flight[] flights = new Flight[] { f1, f2 };
+		ArrayList<Flight> flights = new ArrayList<Flight>();
+		flights.add(f1);
+		flights.add(f2);
 		i1.setFlights(flights);
 		
 		i1.setStatus("Reserved");

@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public class ViewFlightsUI extends JInternalFrame {
 	public ViewFlightsUI() {
 		super("All Flights", false, true);
 		FlightMgr flightMgr = new FlightMgr();
-		Flight[] flights = new Flight[] {};
+		ArrayList<Flight> flights = new ArrayList<Flight>();
 		try {
 			flights = flightMgr.fetchAllFlights();
 		}
@@ -40,7 +41,7 @@ public class ViewFlightsUI extends JInternalFrame {
 		}
 		
 		Container container = getContentPane();
-		GridLayout layout = new GridLayout(flights.length, 1);
+		GridLayout layout = new GridLayout(flights.size(), 1);
 		container.setLayout(layout);
 		
 		airports.put("BUR", "Burbank");
@@ -62,8 +63,8 @@ public class ViewFlightsUI extends JInternalFrame {
 		airlines.put("DL", "Delta Airlines");
 		airlines.put("AI", "Air India");
 		
-		for(Integer i = 0; i < flights.length; i++) {
-			Flight flight = flights[i];
+		for(Integer i = 0; i < flights.size(); i++) {
+			Flight flight = flights.get(i);
 			JPanel panel = new JPanel();
 			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 			

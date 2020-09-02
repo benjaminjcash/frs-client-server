@@ -1,6 +1,9 @@
 package com.mycompany.frs_maven.service;
 import java.io.IOException;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 import com.mycompany.frs_maven.exceptions.RecordNotFoundException;
 import com.mycompany.frs_maven.domain.Flight;
 
@@ -14,11 +17,11 @@ public interface IFlightSvc extends IService {
 	
 	public boolean deleteFlight(String flightNumber);
 	
-	public Flight[] fetchAllFlights();
+	public ArrayList<Flight> fetchAllFlights();
 	
-	public boolean addRecords(Flight[] flights) throws IOException, ClassNotFoundException;
+	public boolean addRecords(ArrayList<Flight> flights) throws IOException, ClassNotFoundException;
 	
-	public Flight[] getRecords() throws IOException, ClassNotFoundException, RecordNotFoundException;
+	public ArrayList<Flight> getRecords() throws IOException, ClassNotFoundException, RecordNotFoundException;
 	
 	public void printAllFlights() throws IOException, ClassNotFoundException, RecordNotFoundException;
 	

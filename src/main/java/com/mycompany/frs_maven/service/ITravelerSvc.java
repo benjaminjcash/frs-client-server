@@ -3,6 +3,7 @@ import com.mycompany.frs_maven.domain.Traveler;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.mycompany.frs_maven.exceptions.RecordNotFoundException;
 import com.mycompany.frs_maven.exceptions.ServiceLoadException;
@@ -17,15 +18,15 @@ public interface ITravelerSvc extends IService {
 	
 	public boolean deleteProfile(String username);
 	
-	public Traveler[] fetchAllProfiles() throws ServiceLoadException;
+	public ArrayList<Traveler> fetchAllProfiles() throws ServiceLoadException;
 	
 	public boolean addPaymentInformation(String username, String creditCardNumber, String expirationDate);
 	
-	public boolean updateItineraryList(String username, Itinerary[] list);
+	public boolean updateItineraryList(String username, ArrayList<Itinerary> list);
 	
-	public boolean addRecords(Traveler[] travelers) throws IOException, ClassNotFoundException;
+	public boolean addRecords(ArrayList<Traveler> travelers) throws IOException, ClassNotFoundException;
 	
-	public Traveler[] getRecords() throws IOException, ClassNotFoundException, RecordNotFoundException;
+	public ArrayList<Traveler> getRecords() throws IOException, ClassNotFoundException, RecordNotFoundException;
 	
 	public void printAllTravelers() throws IOException, ClassNotFoundException, RecordNotFoundException;
 	
