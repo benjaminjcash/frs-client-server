@@ -29,6 +29,4 @@ public interface ITravelerSvc extends IService {
 	public ArrayList<Traveler> getRecords() throws IOException, ClassNotFoundException, RecordNotFoundException;
 	
 	public void printAllTravelers() throws IOException, ClassNotFoundException, RecordNotFoundException;
-	
-	public void printItineraries(String username) throws IOException, ClassNotFoundException, RecordNotFoundException;
 }

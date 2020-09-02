@@ -1,8 +1,12 @@
 package com.mycompany.frs_maven.service;
 import com.mycompany.frs_maven.domain.Traveler;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +23,7 @@ public class TravelerSvcImpl implements ITravelerSvc {
 			traveler = getRecord(username);
 		}
 		catch(RecordNotFoundException e) {
-//			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			return null;
 		}
 		catch(IOException e) {
@@ -176,10 +180,29 @@ public class TravelerSvcImpl implements ITravelerSvc {
 	}
 	
 	public void printAllTravelers() throws IOException, ClassNotFoundException, RecordNotFoundException {
-		// print data
-	}
-	
-	public void printItineraries(String username) throws IOException, ClassNotFoundException, RecordNotFoundException {
-		// print data
+		ArrayList<Traveler> allTravelers = this.fetchAllProfiles();
+		
+		// define lambda expression
+		StringBuilder builder = (String label, String value) -> {
+			String str = label + ": " + value;
+			return str;
+		};
+		
+		// build list of traveler names
+		ArrayList<String> travelerNames = new ArrayList<String>();
+		for(int i = 0; i < allTravelers.size(); i++) {
+			Traveler traveler = allTravelers.get(i);
+			travelerNames.add(traveler.getName());
+		}
+		
+		// sort list
+		Stream<String> stream = travelerNames.stream().sorted();
+		List<String> list = stream.collect(Collectors.toList());
+		
+		// print list
+		for(int i = 0; i < list.size(); i++) {
+			String label = (i + 1) + ". ";
+			System.out.println(builder.build(label, list.get(i)));
+		}
 	}
 }

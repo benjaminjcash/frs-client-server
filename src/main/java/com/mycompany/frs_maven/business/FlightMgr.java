@@ -37,12 +37,6 @@ public class FlightMgr {
 		return flightSvc.deleteFlight(flightNumber);
 	}
 	
-	public Flight createFlight(String flightNumber, String airlineCode, String departureCode, LocalDateTime departureTime, 
-			String arrivalCode, LocalDateTime arrivalTime, double businessTicket, double economyTicket) throws ServiceLoadException {
-		setup();
-		return flightSvc.createFlight(flightNumber, airlineCode, departureCode, departureTime, arrivalCode, arrivalTime, businessTicket, economyTicket);
-	}
-	
 	public ArrayList<Flight> fetchAllFlights() throws ServiceLoadException {
 		setup();
 		return flightSvc.fetchAllFlights();

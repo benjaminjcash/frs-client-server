@@ -1,5 +1,6 @@
 package com.mycompany.frs_maven.presentation;
 import java.awt.Container;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -116,7 +117,6 @@ public class CreateFlightUI extends JInternalFrame {
 			new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					FlightMgr flightMgr = new FlightMgr();
-					Flight newFlight = new Flight();
 					LocalDateTime departureTime = LocalDateTime.of(Integer.parseInt(departureTimeYearFld.getText()),
 																   months.get(departureTimeMonthFld.getText()), 
 																   Integer.parseInt(departureTimeDayFld.getText()), 
@@ -128,14 +128,15 @@ public class CreateFlightUI extends JInternalFrame {
 							   Integer.parseInt(arrivalTimeHourFld.getText()), 
 							   Integer.parseInt(arrivalTimeMinuteFld.getText()));						
 					try {
-						newFlight = flightMgr.createFlight(flightNumberFld.getText(), 
-															airlineCodeFld.getText(),
-															departureCodeFld.getText(), 
-															departureTime, 
-															arrivalCodeFld.getText(), 
-															arrivalTime, 
-															Double.parseDouble(businessTicketFld.getText()),
-															Double.parseDouble(economyTicketFld.getText()));
+						Flight newFlight = new Flight();
+						newFlight.setFlightNumber(flightNumberFld.getText());
+						newFlight.setAirlineCode(airlineCodeFld.getText());
+						newFlight.setDepartureCode(departureCodeFld.getText());
+						newFlight.setDepartureTime(departureTime);
+						newFlight.setArrivalCode(arrivalCodeFld.getText());
+						newFlight.setArrivalTime(arrivalTime);
+						newFlight.setBusinessTicket(Double.parseDouble(businessTicketFld.getText()));
+						newFlight.setEconomyTicket(Double.parseDouble(economyTicketFld.getText()));
 						flightMgr.publishFlight(newFlight);
 					}
 					catch (Exception e) { logger.fatal(e.getMessage()); }

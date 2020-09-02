@@ -1,6 +1,7 @@
 package com.mycompany.frs_maven.domain;
 
 import java.io.Serializable;
+
 import java.time.LocalDateTime;
 
 public class Flight implements Serializable {
