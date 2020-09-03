@@ -9,6 +9,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.Month;
 
 import com.mycompany.frs_maven.exceptions.RecordNotFoundException;
 import com.mycompany.frs_maven.domain.Flight;
@@ -92,6 +94,42 @@ public class FlightSvcImpl implements IFlightSvc {
 	public ArrayList<Flight> getRecords() throws IOException, ClassNotFoundException, RecordNotFoundException {
 		ArrayList<Flight> flights = new ArrayList<Flight>();
 		// retrieve data
+		
+		// dummy data for tests
+		Flight f1 = new Flight();
+		f1.setFlightNumber("AM32");
+		f1.setAirlineCode("AM"); //Aeromexico
+		f1.setDepartureCode("AZT"); //Zapatoca Airport, Zapatoca, Columbia
+		f1.setArrivalCode("AZO"); //Kalamazoo Intl Airport, Kalamazoo, Michigan, US
+		f1.setDepartureTime(LocalDateTime.of(2020, Month.JULY, 20, 16, 30, 00));
+		f1.setArrivalTime(LocalDateTime.of(2020, Month.JULY, 20, 23, 30, 00));
+		f1.setEconomyTicket(650);
+		f1.setBusinessTicket(780);
+		
+		Flight f2 = new Flight();
+		f2.setFlightNumber("JL16");
+		f2.setAirlineCode("JL"); //Japan Airlines
+		f2.setDepartureCode("KIX"); //Kansai International Airport, Japan
+		f2.setArrivalCode("NRT"); //Narita International Airport, Japan
+		f2.setDepartureTime(LocalDateTime.of(2020, Month.MAY, 3, 2, 45, 00));
+		f2.setArrivalTime(LocalDateTime.of(2020, Month.MAY, 3, 5, 30, 00));
+		f2.setEconomyTicket(200);
+		f2.setBusinessTicket(380);
+		
+		Flight f3 = new Flight();
+		f3.setFlightNumber("UA99");
+		f3.setAirlineCode("UA"); //United Airlines
+		f3.setDepartureCode("BUR"); //Hollywood Burbank Airport, California, US
+		f3.setArrivalCode("EYE"); //Eagle Creek Airport, Indiana, US
+		f3.setDepartureTime(LocalDateTime.of(2020, Month.DECEMBER, 11, 14, 00, 00));
+		f3.setArrivalTime(LocalDateTime.of(2020, Month.DECEMBER, 11, 19, 45, 00));
+		f3.setEconomyTicket(350);
+		f3.setBusinessTicket(425);
+		
+		flights.add(f1);
+		flights.add(f2);
+		flights.add(f3);
+		
  		return flights;
 	}
 	
@@ -124,7 +162,7 @@ public class FlightSvcImpl implements IFlightSvc {
 		
 		// define lambda expression
 		StringBuilder builder = (String label, String value) -> {
-			String str = label + ": " + value;
+			String str = label + ". " + value;
 			return str;
 		};
 		
@@ -141,7 +179,7 @@ public class FlightSvcImpl implements IFlightSvc {
 		
 		// print list
 		for(int i = 0; i < list.size(); i++) {
-			String label = (i + 1) + ". ";
+			String label = String.valueOf(i + 1);
 			System.out.println(builder.build(label, list.get(i)));
 		}
 	}
