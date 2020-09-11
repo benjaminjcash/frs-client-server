@@ -1,8 +1,14 @@
 package com.mycompany.frs_maven.service.jdbc_svc;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.sql.*;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.time.LocalDateTime;
 
 import org.apache.logging.log4j.LogManager;
@@ -11,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import com.mycompany.frs_maven.domain.Flight;
 import com.mycompany.frs_maven.exceptions.RecordNotFoundException;
 import com.mycompany.frs_maven.service.IFlightSvc;
+import com.mycompany.frs_maven.service.StringBuilder;
 
 public class FlightSvcJDBCImpl implements IFlightSvc {
 	
@@ -91,17 +98,119 @@ public class FlightSvcJDBCImpl implements IFlightSvc {
 	}
 
 	public boolean deleteFlight(String flightNumber) {
-		// TODO Auto-generated method stub
-		return false;
+		Boolean success = false;
+		fetchConnection();
+		if(connection != null) {
+			try {
+				Statement statement = connection.createStatement();
+				String sql = "DELETE FROM flights WHERE flightNumber = '" + flightNumber + "'";
+				statement.executeUpdate(sql);
+				statement.close();
+				connection.close();
+				success = true;
+			}
+			catch (Exception e) {
+				logger.error(e.getMessage());
+			}
+			
+		} else {
+			logger.info("no connection to database");
+		}
+		return success;
+	}
+	
+	public boolean updateFlight (Flight flight) throws RecordNotFoundException {
+		Boolean success = false;
+		if(flight.getFlightNumber() == null) {
+			throw new RecordNotFoundException("A flight number must be specified when updating a record.");
+		}
+		fetchConnection();
+		if(connection != null) {
+			try {
+				Statement statement = connection.createStatement();
+				String sql = "UPDATE flights SET ";
+				if(flight.getAirlineCode() != null) sql += "airlineCode = '" + flight.getAirlineCode() + "', ";
+				if(flight.getDepartureCode() != null) sql += "departureCode = '" + flight.getDepartureCode() + "', ";
+				if(flight.getArrivalCode() != null) sql += "arrivalCode = '" + flight.getArrivalCode() + "', ";
+				if(flight.getDepartureTime() != null) sql += "departureTime = '" + flight.getDepartureTime() + "', ";
+				if(flight.getArrivalTime() != null) sql += "arrivalTime = '" + flight.getArrivalTime() + "', ";
+				if((Double)flight.getEconomyTicket() != null) sql += "economyTicket = '" + flight.getEconomyTicket() + "', ";
+				if((Double)flight.getBusinessTicket() != null) sql += "businessTicket = '" + flight.getBusinessTicket() + "', ";
+				sql = sql.substring(0, sql.length() - 2);
+				sql += " WHERE flightNumber = '" + flight.getFlightNumber() + "'";
+				statement.executeUpdate(sql);
+				statement.close();
+				connection.close();
+				
+				success = true;
+			}
+			catch (Exception e) {
+				logger.error(e.getMessage());
+			}
+		} else {
+			logger.info("no connection to database");
+		}
+		return success;
 	}
 
 	public ArrayList<Flight> fetchAllFlights() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Flight> flightList = new ArrayList<Flight>();
+		fetchConnection();
+		if(connection != null) {
+			try {
+				Statement statement = connection.createStatement();
+				String sql = "SELECT * FROM flights";
+				ResultSet resultSet = statement.executeQuery(sql);
+				while(resultSet.next()) {
+					Flight flight = new Flight();
+					flight.setFlightNumber(resultSet.getString("flightNumber"));
+					flight.setAirlineCode(resultSet.getString("airlineCode"));
+					flight.setDepartureCode(resultSet.getString("departureCode"));
+					flight.setArrivalCode(resultSet.getString("arrivalCode"));
+					flight.setDepartureTime(resultSet.getObject("departureTime", LocalDateTime.class));
+					flight.setArrivalTime(resultSet.getObject("arrivalTime", LocalDateTime.class));
+					flight.setEconomyTicket(resultSet.getDouble("economyTicket"));
+					flight.setBusinessTicket(resultSet.getDouble("businessTicket"));
+					flightList.add(flight);
+				}
+				statement.close();
+				connection.close();
+			}
+			catch (Exception e) {
+				logger.error(e.getMessage());
+			}
+			
+		} else {
+			logger.info("no connection to database");
+		}
+		return flightList;
 	}
 
 	public void printAllFlights() throws IOException, ClassNotFoundException, RecordNotFoundException {
-		// TODO Auto-generated method stub
+		ArrayList<Flight> allFlights = this.fetchAllFlights();
+		
+		// define lambda expression
+		StringBuilder builder = (String label, String value) -> {
+			String str = label + ". " + value;
+			return str;
+		};
+		
+		// build list of flight numbers
+		ArrayList<String> flightNumbers = new ArrayList<String>();
+		for(int i = 0; i < allFlights.size(); i++) {
+			Flight flight = allFlights.get(i);
+			flightNumbers.add(flight.getFlightNumber());
+		}
+		
+		// sort list
+		Stream<String> stream = flightNumbers.stream().sorted();
+		List<String> list = stream.collect(Collectors.toList());
+		
+		// print list
+		for(int i = 0; i < list.size(); i++) {
+			String label = String.valueOf(i + 1);
+			logger.info(builder.build(label, list.get(i)));
+		}
 		
 	}
 	

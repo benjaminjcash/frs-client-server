@@ -47,18 +47,53 @@ public class FlightSvcTest extends TestCase {
 		catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		logger.info(flight.getDepartureTime());
 		Assert.assertNotNull(flight);
 	}
 	
-//	public void testPrintAllFlights() {
-//		Factory factory = Factory.getInstance();
-//		try {
-//			flightSvc = (IFlightSvc) factory.getService(IFlightSvc.NAME);
-//			flightSvc.printAllFlights();
-//		}
-//		catch(Exception e) {
-//			logger.error(e.getMessage());
-//		}
-//	}
+	public void testUpdateFlight() {
+		Factory factory = Factory.getInstance();
+		boolean success = false;
+		Flight flight = new Flight();
+		Flight updatedFlight = new Flight();
+		flight.setFlightNumber("AM32");
+		flight.setArrivalCode("XXX");
+		try {
+			flightSvc = (IFlightSvc) factory.getService(IFlightSvc.NAME);
+			success = flightSvc.updateFlight(flight);
+			updatedFlight = flightSvc.fetchFlight("AM32");
+			
+		}
+		catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		Assert.assertEquals("FlightSvcTest.testUpdateFlight failed!", updatedFlight.getArrivalCode(), "XXX");
+		Assert.assertTrue("FlightSvcTest.testUpdateFlight failed!", success);
+	}
+	
+	public void testDeleteFlight() {
+		Boolean success = false;
+		Factory factory = Factory.getInstance();
+		try {
+			flightSvc = (IFlightSvc) factory.getService(IFlightSvc.NAME);
+			success = flightSvc.deleteFlight("AM32");
+		}
+		catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		Assert.assertTrue("FlightSvcTest.testDeleteFlight failed!", success);
+	}
+	
+	public void testPrintAllFlights() {
+		Boolean success = false;
+		Factory factory = Factory.getInstance();
+		try {
+			flightSvc = (IFlightSvc) factory.getService(IFlightSvc.NAME);
+			flightSvc.printAllFlights();
+			success = true;
+		}
+		catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		Assert.assertTrue("FlightSvcTest.testPrintAllFlights failed!", success);
+	}
 }

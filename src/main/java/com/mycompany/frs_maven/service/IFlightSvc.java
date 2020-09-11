@@ -15,6 +15,8 @@ public interface IFlightSvc extends IService {
 	
 	public boolean deleteFlight(String flightNumber);
 	
+	public boolean updateFlight (Flight flight) throws RecordNotFoundException;
+	
 	public ArrayList<Flight> fetchAllFlights();
 	
 	public void printAllFlights() throws IOException, ClassNotFoundException, RecordNotFoundException;

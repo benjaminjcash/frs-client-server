@@ -83,6 +83,12 @@ public class FlightSvcFileImpl implements IFlightSvc {
 		return didDelete;
 	}
 	
+	public boolean updateFlight(Flight flight) {
+		boolean didUpdate = true;
+		// update flight
+		return didUpdate;
+	}
+	
 	public ArrayList<Flight> fetchAllFlights() {
 		ArrayList<Flight> flights = new ArrayList<Flight>();
 		try {
