@@ -47,7 +47,7 @@ public class FlightMgr {
 		
 		try {
 			setup();
-			flights = flightSvc.getRecords();
+			flights = flightSvc.fetchAllFlights();
 		}
 		catch(Exception e) {
 			logger.error(e.getMessage());

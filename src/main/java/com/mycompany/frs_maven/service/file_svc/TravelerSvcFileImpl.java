@@ -1,6 +1,5 @@
-package com.mycompany.frs_maven.service;
+package com.mycompany.frs_maven.service.file_svc;
 import com.mycompany.frs_maven.domain.Traveler;
-
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,9 +11,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.mycompany.frs_maven.exceptions.RecordNotFoundException;
+import com.mycompany.frs_maven.service.ITravelerSvc;
 import com.mycompany.frs_maven.domain.Itinerary;
+import com.mycompany.frs_maven.service.StringBuilder;
 
-public class TravelerSvcImpl implements ITravelerSvc {
+public class TravelerSvcFileImpl implements ITravelerSvc {
 	static private Logger logger = LogManager.getLogger();
 	
 	public Traveler fetchProfile(String username) {

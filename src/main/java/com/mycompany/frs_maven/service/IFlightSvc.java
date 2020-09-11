@@ -17,9 +17,5 @@ public interface IFlightSvc extends IService {
 	
 	public ArrayList<Flight> fetchAllFlights();
 	
-	public boolean addRecords(ArrayList<Flight> flights) throws IOException, ClassNotFoundException;
-	
-	public ArrayList<Flight> getRecords() throws IOException, ClassNotFoundException, RecordNotFoundException;
-	
 	public void printAllFlights() throws IOException, ClassNotFoundException, RecordNotFoundException;
 }

@@ -79,7 +79,7 @@ public class ViewFlightsUI extends JInternalFrame {
 			JLabel l2 = new JLabel("   " + airports.get(flight.getDepartureCode()) + " to " + airports.get(flight.getArrivalCode()));
 			JLabel l3 = new JLabel("   Departure Time:" + ddts);
 			JLabel l4 = new JLabel("   Arrival Time:" + adts);
-			JLabel l5 = new JLabel("   Business Class Ticket: $" + flight.getbusinessTicket() + "0");
+			JLabel l5 = new JLabel("   Business Class Ticket: $" + flight.getBusinessTicket() + "0");
 			JLabel l6 = new JLabel("   Economy Class Ticket: $" + flight.getEconomyTicket() + "0");
 			JLabel l7 = new JLabel("   ");
 			JButton l8 = new JButton("Delete");

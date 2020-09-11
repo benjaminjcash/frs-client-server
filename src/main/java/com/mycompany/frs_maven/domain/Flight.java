@@ -66,7 +66,7 @@ public class Flight implements Serializable {
 		this.arrivalTime = time;
 	}
 	
-	public double getbusinessTicket() {
+	public double getBusinessTicket() {
 		return this.businessTicket;
 	}
 	public void setBusinessTicket(double cost) {

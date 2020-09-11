@@ -1,12 +1,15 @@
-package com.mycompany.frs_maven.service;
+package com.mycompany.frs_maven.service.file_svc;
 import java.util.ArrayList;
 
 import com.mycompany.frs_maven.domain.Itinerary;
 import com.mycompany.frs_maven.domain.Traveler;
 import com.mycompany.frs_maven.exceptions.RecordNotFoundException;
 import com.mycompany.frs_maven.exceptions.ServiceLoadException;
+import com.mycompany.frs_maven.service.Factory;
+import com.mycompany.frs_maven.service.IItinerarySvc;
+import com.mycompany.frs_maven.service.ITravelerSvc;
 
-public class ItinerarySvcImpl implements IItinerarySvc {
+public class ItinerarySvcFileImpl implements IItinerarySvc {
 	private ITravelerSvc travelerSvc;
 	private void setup() throws ServiceLoadException {
 		Factory factory = Factory.getInstance();

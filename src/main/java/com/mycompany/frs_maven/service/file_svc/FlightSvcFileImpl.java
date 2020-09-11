@@ -1,6 +1,7 @@
-package com.mycompany.frs_maven.service;
+package com.mycompany.frs_maven.service.file_svc;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -13,9 +14,11 @@ import java.time.LocalDateTime;
 import java.time.Month;
 
 import com.mycompany.frs_maven.exceptions.RecordNotFoundException;
+import com.mycompany.frs_maven.service.IFlightSvc;
 import com.mycompany.frs_maven.domain.Flight;
+import com.mycompany.frs_maven.service.StringBuilder;
 
-public class FlightSvcImpl implements IFlightSvc {
+public class FlightSvcFileImpl implements IFlightSvc {
 
 	static private Logger logger = LogManager.getLogger();
 	
