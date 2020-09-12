@@ -44,8 +44,9 @@ public class ViewFlightsUI extends JInternalFrame {
 		GridLayout layout = new GridLayout(flights.size(), 1);
 		container.setLayout(layout);
 		
-		airports.put("BUR", "Burbank");
+		airports.put("BUR", "Hollywood Burbank Airport");
 		airports.put("PSP", "Palm Springs");
+		airports.put("EYE", "Eagle Creek Airport");
 		airports.put("BHM", "Birmingham International Airport");
 		airports.put("DEN", "Denver International Airport");
 		airports.put("ATL", "Atlanta Hartsfield Jackson International Airport");
@@ -62,6 +63,7 @@ public class ViewFlightsUI extends JInternalFrame {
 		airlines.put("WN", "Southwest Airlines");
 		airlines.put("DL", "Delta Airlines");
 		airlines.put("AI", "Air India");
+		airlines.put("UA", "United Airlines");
 		
 		for(Integer i = 0; i < flights.size(); i++) {
 			Flight flight = flights.get(i);

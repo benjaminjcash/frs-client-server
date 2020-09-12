@@ -14,7 +14,7 @@ public class Traveler implements Serializable {
 	/* Properties */
 	private String name;
 	private String address;
-	private String username;
+	private String username; // unique identifier in db
 	private String password;
 	private String creditCardNumber;
 	private String expirationDate;

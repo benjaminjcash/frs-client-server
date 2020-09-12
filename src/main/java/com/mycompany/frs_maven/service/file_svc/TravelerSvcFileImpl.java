@@ -78,6 +78,11 @@ public class TravelerSvcFileImpl implements ITravelerSvc {
 		return didDelete;
 	}
 	
+	public boolean updateProfile(Traveler traveler) {
+		boolean didUpdate = true;
+		return didUpdate;
+	}
+	
 	public ArrayList<Traveler> fetchAllProfiles() {
 		ArrayList<Traveler> travelers = new ArrayList<Traveler>();
 		try {

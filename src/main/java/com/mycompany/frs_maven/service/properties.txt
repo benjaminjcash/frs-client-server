@@ -1,4 +1,3 @@
 IFlightSvc = com.mycompany.frs_maven.service.jdbc_svc.FlightSvcJDBCImpl
-ITravelerSvc = com.mycompany.frs_maven.service.file_svc.TravelerSvcImpl
+ITravelerSvc = com.mycompany.frs_maven.service.jdbc_svc.TravelerSvcJDBCImpl
 ILoginSvc = com.mycompany.frs_maven.service.LoginSvcImpl
-IItinerarySvc = com.mycompany.frs_maven.service.file_svc.ItinerarySvcImpl
