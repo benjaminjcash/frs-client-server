@@ -1,7 +1,6 @@
 package com.mycompany.frs_maven.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Traveler implements Serializable {
 	/**
@@ -19,7 +18,6 @@ public class Traveler implements Serializable {
 	private String password;
 	private String creditCardNumber;
 	private String expirationDate;
-	private ArrayList<Itinerary> itineraryList;
 	
 	/* Getters and Setters */
 	public String getName() {
@@ -62,13 +60,6 @@ public class Traveler implements Serializable {
 	}
 	public void setExpirationDate(String date) {
 		this.expirationDate = date;
-	}
-	
-	public ArrayList<Itinerary> getItineraryList() {
-		return this.itineraryList;
-	}
-	public void setItineraryList(ArrayList<Itinerary> list) {
-		this.itineraryList = list;
 	}
 	
 	/* Equals */

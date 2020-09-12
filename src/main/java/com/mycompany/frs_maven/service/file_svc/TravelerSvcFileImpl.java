@@ -1,6 +1,7 @@
 package com.mycompany.frs_maven.service.file_svc;
 import com.mycompany.frs_maven.domain.Traveler;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.mycompany.frs_maven.exceptions.RecordNotFoundException;
 import com.mycompany.frs_maven.service.ITravelerSvc;
-import com.mycompany.frs_maven.domain.Itinerary;
 import com.mycompany.frs_maven.service.StringBuilder;
 
 public class TravelerSvcFileImpl implements ITravelerSvc {
@@ -128,25 +128,6 @@ public class TravelerSvcFileImpl implements ITravelerSvc {
 			didWrite = false;
 		}
 		
-		return didWrite;
-	}
-	
-	public boolean updateItineraryList(String username, ArrayList<Itinerary> list) {
-		boolean didWrite = true;
-		Traveler toBeUpdated = fetchProfile(username);
-		deleteProfile(username);
-		toBeUpdated.setItineraryList(list);
-		try {
-			createProfile(toBeUpdated);
-		}
-		catch(IOException e) {
-			logger.error(e.getMessage());
-			didWrite = false;
-		}
-		catch(ClassNotFoundException e) {
-			logger.error(e.getMessage());
-			didWrite = false;
-		}
 		return didWrite;
 	}
 	
