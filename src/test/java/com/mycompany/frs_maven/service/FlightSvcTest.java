@@ -49,7 +49,7 @@ public class FlightSvcTest extends TestCase {
 		}
 		Assert.assertNotNull(flight);
 	}
-	
+
 	public void testUpdateFlight() {
 		Factory factory = Factory.getInstance();
 		boolean success = false;
@@ -69,7 +69,7 @@ public class FlightSvcTest extends TestCase {
 		Assert.assertEquals("FlightSvcTest.testUpdateFlight failed!", updatedFlight.getArrivalCode(), "XXX");
 		Assert.assertTrue("FlightSvcTest.testUpdateFlight failed!", success);
 	}
-	
+
 	public void testDeleteFlight() {
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
@@ -82,7 +82,7 @@ public class FlightSvcTest extends TestCase {
 		}
 		Assert.assertTrue("FlightSvcTest.testDeleteFlight failed!", success);
 	}
-	
+
 	public void testPrintAllFlights() {
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
