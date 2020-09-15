@@ -2,6 +2,13 @@ package com.mycompany.frs_maven.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="travelers")
 public class Traveler implements Serializable {
 	/**
 	 * 
@@ -12,11 +19,36 @@ public class Traveler implements Serializable {
 	public Traveler() {}
 	
 	/* Properties */
+	@Column(name="name",
+			length=45,
+			nullable=false)
 	private String name;
+	
+	@Column(name="address",
+			length=200,
+			nullable=false)
 	private String address;
+	
+	@Id
+	@Column(name="username",
+			length=20,
+			nullable=false,
+			unique=true)
 	private String username; // unique identifier in db
+	
+	@Column(name="password",
+			length=45,
+			nullable=false)
 	private String password;
+	
+	@Column(name="creditCardNumber",
+			length=16,
+			nullable=false)
 	private String creditCardNumber;
+	
+	@Column(name="expirationDate",
+			length=5,
+			nullable=false)
 	private String expirationDate;
 	
 	/* Getters and Setters */

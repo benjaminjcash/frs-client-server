@@ -1,9 +1,15 @@
 package com.mycompany.frs_maven.domain;
 
 import java.io.Serializable;
-
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="flights")
 public class Flight implements Serializable {
 	/**
 	 * 
@@ -14,13 +20,42 @@ public class Flight implements Serializable {
 	public Flight() {}
 	
 	/* Properties */
+	@Id
+	@Column(name="flightNumber", 
+			length=4, 
+			nullable=false, 
+			unique=true)
 	private String flightNumber;
+	
+	@Column(name="airlineCode",
+			length=2,
+			nullable=false)
 	private String airlineCode;
+	
+	@Column(name="departureCode",
+			length=3,
+			nullable=false)
 	private String departureCode;
+	
+	@Column(name="departureTime",
+			nullable=false)
 	private LocalDateTime departureTime;
+	
+	@Column(name="arrivalCode",
+			length=3,
+			nullable=false)
 	private String arrivalCode;
+	
+	@Column(name="arrivalTime",
+			nullable=false)
 	private LocalDateTime arrivalTime;
+	
+	@Column(name="businessTicket",
+			nullable=false)
 	private double businessTicket;
+	
+	@Column(name="economyTicket",
+			nullable=false)
 	private double economyTicket;
 	
 	/* Getters and Setters */
