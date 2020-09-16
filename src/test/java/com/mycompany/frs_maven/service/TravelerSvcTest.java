@@ -12,6 +12,7 @@ public class TravelerSvcTest extends TestCase {
 	private ITravelerSvc travelerSvc;
 	
 	public void testCreateProfile() {
+		logger.error("testCreateProfile");
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
 		Traveler traveler = new Traveler();
@@ -32,6 +33,7 @@ public class TravelerSvcTest extends TestCase {
 	}
 	
 	public void testFetchProfile() {
+		logger.error("testFetchProfile");
 		Factory factory = Factory.getInstance();
 		Traveler traveler = null;
 		try {
@@ -41,10 +43,11 @@ public class TravelerSvcTest extends TestCase {
 		catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		Assert.assertNotNull(traveler);
+		Assert.assertTrue("TravelerSvcTest.testFetchProfile failed!", traveler.getName() == "Ozzy Osbourne");
 	}
 	
 	public void testUpdateProfile() {
+		logger.error("testUpdateProfile");
 		Factory factory = Factory.getInstance();
 		boolean success = false;
 		Traveler traveler = new Traveler();
@@ -64,6 +67,7 @@ public class TravelerSvcTest extends TestCase {
 	}
 	
 	public void testDeleteProfile() {
+		logger.error("testDeleteProfile");
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
 		try {
@@ -78,6 +82,7 @@ public class TravelerSvcTest extends TestCase {
 	}
 	
 	public void testPrintAllTravelers() {
+		logger.error("testPrintAllTravelers");
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
 		try {
