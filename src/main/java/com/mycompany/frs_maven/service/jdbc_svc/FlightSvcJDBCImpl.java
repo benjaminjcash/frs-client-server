@@ -1,5 +1,6 @@
 package com.mycompany.frs_maven.service.jdbc_svc;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.sql.Connection;
@@ -8,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.time.LocalDateTime;
@@ -24,11 +26,27 @@ public class FlightSvcJDBCImpl implements IFlightSvc {
 	
 	static private Logger logger = LogManager.getLogger();
 	private Connection connection = null;
-	private String url = "jdbc:mysql://localhost:3306/frs_db";
-	private String userId = "root";
-	private String password = "admin";
+	private String url;
+	private String userId;
+	private String password;
+	
+	private void getDatabaseCredentials() {
+		Properties props = new Properties();
+		try {
+			FileInputStream fis = new FileInputStream("src/main/resources/db_credentials.properties");
+			props.load(fis);
+			fis.close();
+		}
+		catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		url = props.getProperty("url");
+		userId = props.getProperty("userId");
+		password = props.getProperty("password");
+	}
 	
 	private void fetchConnection() {
+		getDatabaseCredentials();
 		try {
 			connection = DriverManager.getConnection(url, userId, password);
 		}
