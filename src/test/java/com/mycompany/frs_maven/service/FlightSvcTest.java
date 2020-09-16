@@ -6,16 +6,19 @@ import java.time.Month;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 
 import com.mycompany.frs_maven.domain.Flight;
 
 import junit.framework.TestCase;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FlightSvcTest extends TestCase {
 	static private Logger logger = LogManager.getLogger();
 	private IFlightSvc flightSvc;
 	
-	public void testPublishFlight() {
+	public void testAPublishFlight() {
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
 		Flight flight = new Flight();
@@ -34,10 +37,10 @@ public class FlightSvcTest extends TestCase {
 		catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		Assert.assertTrue("FlightSvcTest.testPublishFlight failed!", success);
+		Assert.assertTrue("FlightSvcTest.testAPublishFlight failed!", success);
 	}
 	
-	public void testFetchFlight() {
+	public void testBFetchFlight() {
 		Factory factory = Factory.getInstance();
 		Flight flight = null;
 		try {
@@ -47,10 +50,10 @@ public class FlightSvcTest extends TestCase {
 		catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		Assert.assertNotNull(flight);
+		Assert.assertTrue("FlightSvcTest.testBFetchFlight failed!", flight.getAirlineCode().equals("AM"));
 	}
 
-	public void testUpdateFlight() {
+	public void testCUpdateFlight() {
 		Factory factory = Factory.getInstance();
 		boolean success = false;
 		Flight flight = new Flight();
@@ -66,11 +69,11 @@ public class FlightSvcTest extends TestCase {
 		catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		Assert.assertEquals("FlightSvcTest.testUpdateFlight failed!", updatedFlight.getArrivalCode(), "XXX");
-		Assert.assertTrue("FlightSvcTest.testUpdateFlight failed!", success);
+		Assert.assertEquals("FlightSvcTest.testCUpdateFlight failed!", updatedFlight.getArrivalCode(), "XXX");
+		Assert.assertTrue("FlightSvcTest.testCUpdateFlight failed!", success);
 	}
 
-	public void testDeleteFlight() {
+	public void testDDeleteFlight() {
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
 		try {
@@ -80,10 +83,10 @@ public class FlightSvcTest extends TestCase {
 		catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		Assert.assertTrue("FlightSvcTest.testDeleteFlight failed!", success);
+		Assert.assertTrue("FlightSvcTest.testDDeleteFlight failed!", success);
 	}
 
-	public void testPrintAllFlights() {
+	public void testEPrintAllFlights() {
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
 		try {
@@ -94,6 +97,6 @@ public class FlightSvcTest extends TestCase {
 		catch(Exception e) {
 			logger.error(e.getMessage());
 		}
-		Assert.assertTrue("FlightSvcTest.testPrintAllFlights failed!", success);
+		Assert.assertTrue("FlightSvcTest.testEPrintAllFlights failed!", success);
 	}
 }

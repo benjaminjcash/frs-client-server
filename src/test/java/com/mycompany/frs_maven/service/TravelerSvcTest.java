@@ -3,16 +3,19 @@ package com.mycompany.frs_maven.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
+
 import com.mycompany.frs_maven.domain.Traveler;
 
 import junit.framework.TestCase;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TravelerSvcTest extends TestCase {
 	static private Logger logger = LogManager.getLogger();
 	private ITravelerSvc travelerSvc;
 	
-	public void testCreateProfile() {
-		logger.error("testCreateProfile");
+	public void testACreateProfile() {
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
 		Traveler traveler = new Traveler();
@@ -29,11 +32,10 @@ public class TravelerSvcTest extends TestCase {
 		catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		Assert.assertTrue("TravelerSvcTest.testCreateProfile failed!", success);
+		Assert.assertTrue("TravelerSvcTest.testACreateProfile failed!", success);
 	}
 	
-	public void testFetchProfile() {
-		logger.error("testFetchProfile");
+	public void testBFetchProfile() {
 		Factory factory = Factory.getInstance();
 		Traveler traveler = null;
 		try {
@@ -43,11 +45,10 @@ public class TravelerSvcTest extends TestCase {
 		catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		Assert.assertTrue("TravelerSvcTest.testFetchProfile failed!", traveler.getName() == "Ozzy Osbourne");
+		Assert.assertTrue("TravelerSvcTest.testBFetchProfile failed!", traveler.getName().equals("Ozzy Osbourne"));
 	}
 	
-	public void testUpdateProfile() {
-		logger.error("testUpdateProfile");
+	public void testCUpdateProfile() {
 		Factory factory = Factory.getInstance();
 		boolean success = false;
 		Traveler traveler = new Traveler();
@@ -62,12 +63,11 @@ public class TravelerSvcTest extends TestCase {
 		catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		Assert.assertEquals("TravelerSvcTest.testUpdateProfile failed!", updatedTraveler.getCreditCardNumber(), "9999666699996666");
-		Assert.assertTrue("TravelerSvcTest.testUpdateProfile failed!", success);
+		Assert.assertEquals("TravelerSvcTest.testCUpdateProfile failed!", updatedTraveler.getCreditCardNumber(), "9999666699996666");
+		Assert.assertTrue("TravelerSvcTest.testCUpdateProfile failed!", success);
 	}
 	
-	public void testDeleteProfile() {
-		logger.error("testDeleteProfile");
+	public void testDDeleteProfile() {
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
 		try {
@@ -78,11 +78,10 @@ public class TravelerSvcTest extends TestCase {
 		catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		Assert.assertTrue("TravelerSvcTest.testDeleteProfile failed!", success);
+		Assert.assertTrue("TravelerSvcTest.testDDeleteProfile failed!", success);
 	}
 	
-	public void testPrintAllTravelers() {
-		logger.error("testPrintAllTravelers");
+	public void testEPrintAllTravelers() {
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
 		try {
@@ -93,6 +92,6 @@ public class TravelerSvcTest extends TestCase {
 		catch(Exception e) {
 			logger.error(e.getMessage());
 		}
-		Assert.assertTrue("TravelerSvcTest.testPrintAllTravelers failed!", success);
+		Assert.assertTrue("TravelerSvcTest.testEPrintAllTravelers failed!", success);
 	}
 }
