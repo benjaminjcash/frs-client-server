@@ -1,6 +1,7 @@
 package com.mycompany.frs_maven.service.jdbc_svc;
 
 import java.io.FileInputStream;
+
 import java.io.IOException;
 
 import java.sql.Connection;
@@ -9,13 +10,20 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import java.time.LocalDateTime;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.mycompany.frs_maven.domain.Flight;
 import com.mycompany.frs_maven.exceptions.RecordNotFoundException;
@@ -31,18 +39,32 @@ public class FlightSvcJDBCImpl implements IFlightSvc {
 	private String password;
 	
 	private void getDatabaseCredentials() {
-		Properties props = new Properties();
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		try {
-			FileInputStream fis = new FileInputStream("src/main/resources/db_credentials.properties");
-			props.load(fis);
-			fis.close();
+			DocumentBuilder parser = factory.newDocumentBuilder();
+			Document document = parser.parse(new FileInputStream("src/main/resources/db_credentials.xml"));
+			Element root = document.getDocumentElement();
+			NodeList nodes = root.getChildNodes();
+			for(int i = 0; i < nodes.getLength(); i++) {
+				Node node = nodes.item(i);
+				if(node instanceof Element) {
+					Element element = (Element) node;
+					String tag = element.getTagName();
+					String value = element.getTextContent();
+					switch(tag) {
+					case "url":
+						this.url = value;
+					case "userId":
+						this.userId = value;
+					case "password":
+						this.password = value;
+					}
+				}
+			}
 		}
-		catch (Exception e) {
+		catch(Exception e) {
 			logger.error(e.getMessage());
 		}
-		url = props.getProperty("url");
-		userId = props.getProperty("userId");
-		password = props.getProperty("password");
 	}
 	
 	private void fetchConnection() {

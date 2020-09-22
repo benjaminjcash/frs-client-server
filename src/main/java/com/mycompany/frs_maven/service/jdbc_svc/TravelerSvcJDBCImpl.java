@@ -1,5 +1,6 @@
 package com.mycompany.frs_maven.service.jdbc_svc;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,8 +11,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.mycompany.frs_maven.domain.Traveler;
 import com.mycompany.frs_maven.exceptions.RecordNotFoundException;
@@ -22,11 +30,41 @@ public class TravelerSvcJDBCImpl implements ITravelerSvc {
 	
 	static private Logger logger = LogManager.getLogger();
 	private Connection connection = null;
-	private String url = "jdbc:mysql://localhost:3306/frs_db";
-	private String userId = "root";
-	private String password = "admin";
+	private String url;
+	private String userId;
+	private String password;
+	
+	private void getDatabaseCredentials() {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		try {
+			DocumentBuilder parser = factory.newDocumentBuilder();
+			Document document = parser.parse(new FileInputStream("src/main/resources/db_credentials.xml"));
+			Element root = document.getDocumentElement();
+			NodeList nodes = root.getChildNodes();
+			for(int i = 0; i < nodes.getLength(); i++) {
+				Node node = nodes.item(i);
+				if(node instanceof Element) {
+					Element element = (Element) node;
+					String tag = element.getTagName();
+					String value = element.getTextContent();
+					switch(tag) {
+					case "url":
+						this.url = value;
+					case "userId":
+						this.userId = value;
+					case "password":
+						this.password = value;
+					}
+				}
+			}
+		}
+		catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
 	
 	private void fetchConnection() {
+		getDatabaseCredentials();
 		try {
 			connection = DriverManager.getConnection(url, userId, password);
 		}
