@@ -27,6 +27,7 @@ public class TravelerSvcTest extends TestCase {
 		traveler.setCreditCardNumber("1122666899094774");
 		traveler.setExpirationDate("12/28");
 		try {
+			FlightReservationSystemServerManager.getInstance(); // instantiate to load services.xml
 			travelerSvc = (ITravelerSvc) factory.getService(ITravelerSvc.NAME);
 			success = travelerSvc.createProfile(traveler);
 		}
@@ -40,6 +41,7 @@ public class TravelerSvcTest extends TestCase {
 		Factory factory = Factory.getInstance();
 		Traveler traveler = null;
 		try {
+			FlightReservationSystemServerManager.getInstance(); // instantiate to load services.xml
 			travelerSvc = (ITravelerSvc) factory.getService(ITravelerSvc.NAME);
 			traveler = travelerSvc.fetchProfile("cr4zytrain666");
 		}
@@ -57,6 +59,7 @@ public class TravelerSvcTest extends TestCase {
 		traveler.setUsername("cr4zytrain666");
 		traveler.setCreditCardNumber("9999666699996666");
 		try {
+			FlightReservationSystemServerManager.getInstance(); // instantiate to load services.xml
 			travelerSvc = (ITravelerSvc) factory.getService(ITravelerSvc.NAME);
 			success = travelerSvc.updateProfile(traveler);
 			updatedTraveler = travelerSvc.fetchProfile("cr4zytrain666");
@@ -86,6 +89,7 @@ public class TravelerSvcTest extends TestCase {
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
 		try {
+			FlightReservationSystemServerManager.getInstance(); // instantiate to load services.xml
 			travelerSvc = (ITravelerSvc) factory.getService(ITravelerSvc.NAME);
 			travelerSvc.printAllTravelers();
 			success = true;
