@@ -25,6 +25,7 @@ public class FlightReservationSystemServerManager extends BaseServerManager {
 		
 		try {
 			FlightMgr flightManager = new FlightMgr();
+			TravelerMgr travelerManager = new TravelerMgr();
 			switch(dtoIn.getCommandString()) {
 				case "fetchAllFlights":
 					ArrayList<Flight> fetchedFlights = flightManager.fetchAllFlights();
@@ -44,6 +45,25 @@ public class FlightReservationSystemServerManager extends BaseServerManager {
 				case "deleteFlight":
 					Flight flightToDelete = (Flight)dtoIn.getData();
 					status = flightManager.deleteFlight(flightToDelete.getFlightNumber());
+					break;
+				case "fetchAllProfiles":
+					ArrayList<Traveler> fetchedProfiles = travelerManager.fetchAllProfiles();
+					dtoOut.setData(fetchedProfiles);
+					status = true;
+					break;
+				case "deleteProfile":
+					Traveler travelerToDelete = (Traveler)dtoIn.getData();
+					status = travelerManager.deleteProfile(travelerToDelete.getUsername());
+					break;
+				case "createProfile":
+					Traveler profileToBeWritten = (Traveler)dtoIn.getData();
+					status = travelerManager.createProfile(profileToBeWritten);
+					break;
+				case "fetchProfile":
+					Traveler profileToFetch = (Traveler)dtoIn.getData();
+					Traveler fetchedProfile = travelerManager.fetchProfile(profileToFetch.getUsername());
+					dtoOut.setData(fetchedProfile);
+					status = true;
 					break;
 			}
 		}

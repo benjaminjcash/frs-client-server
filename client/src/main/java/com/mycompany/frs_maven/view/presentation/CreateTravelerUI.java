@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.mycompany.frs_maven.controller.TravelerController;
 import com.mycompany.frs_maven.model.domain.Traveler;
 
 public class CreateTravelerUI extends JInternalFrame {
@@ -57,21 +58,20 @@ public class CreateTravelerUI extends JInternalFrame {
 		submitBtn.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent event) {
-//						TravelerMgr travelerMgr = new TravelerMgr();
-//						Traveler newTraveler = new Traveler();
-//						newTraveler.setName(nameFld.getText());
-//						newTraveler.setAddress(addressFld.getText());
-//						newTraveler.setUsername(usernameFld.getText());
-//						newTraveler.setPassword(passwordFld.getText());
-//						newTraveler.setCreditCardNumber(creditCardNumberFld.getText());
-//						newTraveler.setExpirationDate(expirationDateFld.getText());
-//						try {
-//							travelerMgr.createProfile(newTraveler);
-//						}
-//						catch (Exception e) { logger.error(e.getMessage()); }
-//						printTravelers();
-//						dispose();
-//						MainUI.openLoginUI();
+						TravelerController controller = new TravelerController();
+						Traveler newTraveler = new Traveler();
+						newTraveler.setName(nameFld.getText());
+						newTraveler.setAddress(addressFld.getText());
+						newTraveler.setUsername(usernameFld.getText());
+						newTraveler.setPassword(passwordFld.getText());
+						newTraveler.setCreditCardNumber(creditCardNumberFld.getText());
+						newTraveler.setExpirationDate(expirationDateFld.getText());
+						try {
+							controller.createProfile(newTraveler);
+						}
+						catch (Exception e) { logger.error(e.getMessage()); }
+						dispose();
+						MainUI.openLoginUI();
 					}
 				}
 			);
