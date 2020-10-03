@@ -32,17 +32,18 @@ public class FlightReservationSystemServerManager extends BaseServerManager {
 					status = true;
 					break;
 				case "fetchFlight":
-					Flight receivedflight = (Flight)dtoIn.getData();
-					Flight fetchedFlight = flightManager.fetchFlight(receivedflight.getFlightNumber());
+					Flight flightToFetch = (Flight)dtoIn.getData();
+					Flight fetchedFlight = flightManager.fetchFlight(flightToFetch.getFlightNumber());
 					dtoOut.setData(fetchedFlight);
 					status = true;
 					break;
-				case "fetchTraveler":
-					TravelerMgr travelerManager = new TravelerMgr();
-					Traveler receivedTraveler = (Traveler)dtoIn.getData();
-					Traveler fetchedTraveler = travelerManager.fetchProfile(receivedTraveler.getUsername());
-					dtoOut.setData(fetchedTraveler);
-					status = true;
+				case "createFlight":
+					Flight flightToBeWritten = (Flight)dtoIn.getData();
+					status = flightManager.publishFlight(flightToBeWritten);
+					break;
+				case "deleteFlight":
+					Flight flightToDelete = (Flight)dtoIn.getData();
+					status = flightManager.deleteFlight(flightToDelete.getFlightNumber());
 					break;
 			}
 		}

@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
+import com.mycompany.frs_maven.model.business.FlightReservationSystemServerManager;
 import com.mycompany.frs_maven.model.domain.Traveler;
 
 import junit.framework.TestCase;

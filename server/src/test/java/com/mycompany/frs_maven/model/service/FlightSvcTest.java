@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
+import com.mycompany.frs_maven.model.business.FlightReservationSystemServerManager;
 import com.mycompany.frs_maven.model.domain.Flight;
 
 import junit.framework.TestCase;
@@ -19,6 +20,7 @@ public class FlightSvcTest extends TestCase {
 	private IFlightSvc flightSvc;
 	
 	public void testAPublishFlight() {
+		
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
 		Flight flight = new Flight();
@@ -31,6 +33,7 @@ public class FlightSvcTest extends TestCase {
 		flight.setEconomyTicket(650);
 		flight.setBusinessTicket(780);
 		try {
+			FlightReservationSystemServerManager.getInstance(); // instantiate to load services.xml
 			flightSvc = (IFlightSvc) factory.getService(IFlightSvc.NAME);
 			success = flightSvc.publishFlight(flight);
 		}
@@ -44,6 +47,7 @@ public class FlightSvcTest extends TestCase {
 		Factory factory = Factory.getInstance();
 		Flight flight = null;
 		try {
+			FlightReservationSystemServerManager.getInstance(); // instantiate to load services.xml
 			flightSvc = (IFlightSvc) factory.getService(IFlightSvc.NAME);
 			flight = flightSvc.fetchFlight("AM32");
 		}
@@ -61,6 +65,7 @@ public class FlightSvcTest extends TestCase {
 		flight.setFlightNumber("AM32");
 		flight.setArrivalCode("XXX");
 		try {
+			FlightReservationSystemServerManager.getInstance(); // instantiate to load services.xml
 			flightSvc = (IFlightSvc) factory.getService(IFlightSvc.NAME);
 			success = flightSvc.updateFlight(flight);
 			updatedFlight = flightSvc.fetchFlight("AM32");
@@ -77,6 +82,7 @@ public class FlightSvcTest extends TestCase {
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
 		try {
+			FlightReservationSystemServerManager.getInstance(); // instantiate to load services.xml
 			flightSvc = (IFlightSvc) factory.getService(IFlightSvc.NAME);
 			success = flightSvc.deleteFlight("AM32");
 		}
@@ -90,6 +96,7 @@ public class FlightSvcTest extends TestCase {
 		Boolean success = false;
 		Factory factory = Factory.getInstance();
 		try {
+			FlightReservationSystemServerManager.getInstance(); // instantiate to load services.xml
 			flightSvc = (IFlightSvc) factory.getService(IFlightSvc.NAME);
 			flightSvc.printAllFlights();
 			success = true;

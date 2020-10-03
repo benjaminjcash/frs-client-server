@@ -19,4 +19,41 @@ public class FlightController {
 		fetchedFlights = (ArrayList<Flight>)data;
 		return fetchedFlights;
 	}
+	
+	public Flight fetchFlight(String flightNumber) {
+		Flight fetchedFlight = new Flight();
+		DTO dtoOut = new DTO();
+		Flight flight = new Flight();
+		flight.setFlightNumber(flightNumber);
+		dtoOut.setData(flight);
+		dtoOut.setCommandString("fetchFlight");
+		FlightReservationSystemController controller = new FlightReservationSystemController();
+		DTO dtoIn = controller.performAction(dtoOut);
+		fetchedFlight = (Flight)dtoIn.getData();
+		return fetchedFlight;
+	}
+	
+	public Boolean createFlight(Flight flight) {
+		Boolean status = false;
+		DTO dtoOut = new DTO();
+		dtoOut.setCommandString("createFlight");
+		dtoOut.setData(flight);
+		FlightReservationSystemController controller = new FlightReservationSystemController();
+		DTO dtoIn = controller.performAction(dtoOut);
+		status = (Boolean)dtoIn.getStatus();
+		return status;
+	}
+	
+	public Boolean deleteFlight(String flightNumber) {
+		Boolean status = false;
+		DTO dtoOut = new DTO();
+		dtoOut.setCommandString("deleteFlight");
+		Flight flight = new Flight();
+		flight.setFlightNumber(flightNumber);
+		dtoOut.setData(flight);
+		FlightReservationSystemController controller = new FlightReservationSystemController();
+		DTO dtoIn = controller.performAction(dtoOut);
+		status = (Boolean)dtoIn.getStatus();
+		return status;
+	}
 }

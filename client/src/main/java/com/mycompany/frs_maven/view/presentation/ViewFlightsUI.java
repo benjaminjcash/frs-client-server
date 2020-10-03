@@ -101,8 +101,13 @@ public class ViewFlightsUI extends JInternalFrame {
 			l8.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent event) {
-						deleteFlight(flight.getFlightNumber());
-						dispose();
+						Boolean status = deleteFlight(flight.getFlightNumber());
+						if(status) {
+							dispose();
+						} else {
+							logger.error("failed to delete flight: " + flight.getFlightNumber());
+						}
+						
 					}
 				}
 			);
@@ -111,13 +116,15 @@ public class ViewFlightsUI extends JInternalFrame {
 		setVisible(true);
 	}
 	
-	private static void deleteFlight(String flightNumber) {
-//		FlightMgr flightMgr = new FlightMgr();
-//		try {
-//			flightMgr.deleteFlight(flightNumber);
-//		}
-//		catch (Exception e) {
-//			logger.error(e.getMessage());
-//		}
+	private Boolean deleteFlight(String flightNumber) {
+		Boolean status = false;
+		FlightController flightController = new FlightController();
+		try {
+			status = flightController.deleteFlight(flightNumber);
+		}
+		catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return status;
 	}
 }

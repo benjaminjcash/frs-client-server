@@ -13,6 +13,7 @@ import javax.swing.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.mycompany.frs_maven.controller.FlightController;
 import com.mycompany.frs_maven.model.domain.Flight;
 
 public class CreateFlightUI extends JInternalFrame {
@@ -113,32 +114,38 @@ public class CreateFlightUI extends JInternalFrame {
 		submitBtn.addActionListener(
 			new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
-//					FlightMgr flightMgr = new FlightMgr();
-//					LocalDateTime departureTime = LocalDateTime.of(Integer.parseInt(departureTimeYearFld.getText()),
-//																   months.get(departureTimeMonthFld.getText()), 
-//																   Integer.parseInt(departureTimeDayFld.getText()), 
-//																   Integer.parseInt(departureTimeHourFld.getText()), 
-//																   Integer.parseInt(departureTimeMinuteFld.getText()));
-//					LocalDateTime arrivalTime = LocalDateTime.of(Integer.parseInt(arrivalTimeYearFld.getText()),
-//							   months.get(arrivalTimeMonthFld.getText()), 
-//							   Integer.parseInt(arrivalTimeDayFld.getText()), 
-//							   Integer.parseInt(arrivalTimeHourFld.getText()), 
-//							   Integer.parseInt(arrivalTimeMinuteFld.getText()));						
-//					try {
-//						Flight newFlight = new Flight();
-//						newFlight.setFlightNumber(flightNumberFld.getText());
-//						newFlight.setAirlineCode(airlineCodeFld.getText());
-//						newFlight.setDepartureCode(departureCodeFld.getText());
-//						newFlight.setDepartureTime(departureTime);
-//						newFlight.setArrivalCode(arrivalCodeFld.getText());
-//						newFlight.setArrivalTime(arrivalTime);
-//						newFlight.setBusinessTicket(Double.parseDouble(businessTicketFld.getText()));
-//						newFlight.setEconomyTicket(Double.parseDouble(economyTicketFld.getText()));
-//						flightMgr.publishFlight(newFlight);
-//					}
-//					catch (Exception e) { logger.fatal(e.getMessage()); }
-//					dispose();
-//					MainUI.openViewFlightsUI();
+					Boolean status = false;
+					FlightController controller = new FlightController();
+					LocalDateTime departureTime = LocalDateTime.of(Integer.parseInt(departureTimeYearFld.getText()),
+																   months.get(departureTimeMonthFld.getText()), 
+																   Integer.parseInt(departureTimeDayFld.getText()), 
+																   Integer.parseInt(departureTimeHourFld.getText()), 
+																   Integer.parseInt(departureTimeMinuteFld.getText()));
+					LocalDateTime arrivalTime = LocalDateTime.of(Integer.parseInt(arrivalTimeYearFld.getText()),
+							   months.get(arrivalTimeMonthFld.getText()), 
+							   Integer.parseInt(arrivalTimeDayFld.getText()), 
+							   Integer.parseInt(arrivalTimeHourFld.getText()), 
+							   Integer.parseInt(arrivalTimeMinuteFld.getText()));						
+					try {
+						Flight newFlight = new Flight();
+						newFlight.setFlightNumber(flightNumberFld.getText());
+						newFlight.setAirlineCode(airlineCodeFld.getText());
+						newFlight.setDepartureCode(departureCodeFld.getText());
+						newFlight.setDepartureTime(departureTime);
+						newFlight.setArrivalCode(arrivalCodeFld.getText());
+						newFlight.setArrivalTime(arrivalTime);
+						newFlight.setBusinessTicket(Double.parseDouble(businessTicketFld.getText()));
+						newFlight.setEconomyTicket(Double.parseDouble(economyTicketFld.getText()));
+						status = controller.createFlight(newFlight);
+					}
+					catch (Exception e) { logger.fatal(e.getMessage()); }
+					dispose();
+					if(status) {
+						MainUI.openViewFlightsUI();
+					} else {
+						logger.error("failed to create new flight");
+					}
+					
 				}
 			}
 		);
