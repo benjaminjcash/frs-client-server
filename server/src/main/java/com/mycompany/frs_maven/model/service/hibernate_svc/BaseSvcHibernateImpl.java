@@ -2,6 +2,7 @@ package com.mycompany.frs_maven.model.service.hibernate_svc;
 
 import org.apache.logging.log4j.LogManager;
 
+
 import org.apache.logging.log4j.Logger;
 import org.hibernate.*;
 import org.hibernate.cfg.*;

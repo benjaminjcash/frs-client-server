@@ -2,12 +2,14 @@ package com.mycompany.frs_maven.server;
 
 import java.net.Socket;
 
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.mycompany.frs_maven.model.domain.DTO;
 import com.mycompany.frs_maven.model.business.FlightReservationSystemServerManager;
 
 public class FlightReservationSystemServerHandler {
@@ -25,14 +27,15 @@ public class FlightReservationSystemServerHandler {
 		try {
 			in = new ObjectInputStream(incomingSocket.getInputStream());
 			out = new ObjectOutputStream(incomingSocket.getOutputStream());
-			String commandString = (String)in.readObject();
+			DTO dtoIn = (DTO)in.readObject();
+			logger.error("received request from client to perform action: " + dtoIn.getCommandString());
 			FlightReservationSystemServerManager serverManager = FlightReservationSystemServerManager.getInstance();
-			boolean status = serverManager.performAction(commandString);
-			out.writeObject(status);
+			DTO dtoOut = serverManager.performAction(dtoIn);
+			out.writeObject(dtoOut);
 			out.flush();
 		}
 		catch(Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e);
 		}
 		finally {
 			try {

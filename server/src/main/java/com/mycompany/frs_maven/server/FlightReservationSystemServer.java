@@ -12,13 +12,15 @@ public class FlightReservationSystemServer {
 	private FlightReservationSystemServer() {}
 	
 	public static void startServer() {
+		logger.error("frs server listening...");
 		try {
-			logger.error("frs server started");
+			@SuppressWarnings("resource")
 			ServerSocket s = new ServerSocket(8000);
 			for(;;) {
 				Socket socket = s.accept();
 				FlightReservationSystemServerHandler serverHandler = new FlightReservationSystemServerHandler(socket);
 				serverHandler.run();
+				
 			}
 		}
 		catch(Exception e) {
