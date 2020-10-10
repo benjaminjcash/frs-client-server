@@ -6,20 +6,23 @@ import java.net.Socket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class FlightReservationSystemServer {
+public class ThreadedFRSServer {
 	static private Logger logger = LogManager.getLogger();
 	
-	private FlightReservationSystemServer() {}
+	private ThreadedFRSServer() {}
 	
 	public static void startServer() {
 		logger.error("frs server listening...");
+		int i = 1;
 		try {
 			@SuppressWarnings("resource")
 			ServerSocket s = new ServerSocket(8000);
 			for(;;) {
 				Socket socket = s.accept();
-				FlightReservationSystemServerHandler serverHandler = new FlightReservationSystemServerHandler(socket);
-				serverHandler.run();
+				logger.error("spawning thread..." + i);
+				ThreadedFRSServerHandler serverHandler = new ThreadedFRSServerHandler(socket, i);
+				serverHandler.start();
+				i++;
 				
 			}
 		}
@@ -29,6 +32,6 @@ public class FlightReservationSystemServer {
 	}
 	
 	public static void main(String[] args) {
-		FlightReservationSystemServer.startServer();
+		ThreadedFRSServer.startServer();
 	}
 }

@@ -13,7 +13,7 @@ public class LoginMgr {
 		loginSvc = (ILoginSvc) factory.getService(ILoginSvc.NAME);
 	}
 	
-	public boolean login(String username, String password) throws RecordNotFoundException, WrongPasswordException, ServiceLoadException {
+	public synchronized boolean login(String username, String password) throws RecordNotFoundException, WrongPasswordException, ServiceLoadException {
 		setup();
 		return loginSvc.login(username, password);
 	}

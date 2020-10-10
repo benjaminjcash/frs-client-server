@@ -12,40 +12,35 @@ import org.apache.logging.log4j.Logger;
 import com.mycompany.frs_maven.model.domain.DTO;
 import com.mycompany.frs_maven.model.business.FlightReservationSystemServerManager;
 
-public class FlightReservationSystemServerHandler {
+public class ThreadedFRSServerHandler extends Thread {
 	static private Logger logger = LogManager.getLogger();
 	private Socket incomingSocket;
+	private int counter;
 	
-	public FlightReservationSystemServerHandler() {}
-	public FlightReservationSystemServerHandler(Socket _incomingSocket) {
+	public ThreadedFRSServerHandler() {}
+	public ThreadedFRSServerHandler(Socket _incomingSocket, int c) {
 		incomingSocket = _incomingSocket;
+		counter = c;
 	}
 	
 	public void run() {
-		ObjectInputStream in = null;
-		ObjectOutputStream out = null;
 		try {
-			in = new ObjectInputStream(incomingSocket.getInputStream());
-			out = new ObjectOutputStream(incomingSocket.getOutputStream());
+			ObjectInputStream in = new ObjectInputStream(incomingSocket.getInputStream());
+			ObjectOutputStream out = new ObjectOutputStream(incomingSocket.getOutputStream());
 			DTO dtoIn = (DTO)in.readObject();
-			logger.error("received request from client to perform action: " + dtoIn.getCommandString());
+			logger.error("received request from client to perform action " + dtoIn.getCommandString() + "...");
 			FlightReservationSystemServerManager serverManager = FlightReservationSystemServerManager.getInstance();
 			DTO dtoOut = serverManager.performAction(dtoIn);
 			out.writeObject(dtoOut);
 			out.flush();
+			if(in != null) in.close();
+			if(out != null) out.close();
+			if(incomingSocket != null) incomingSocket.close();
+			Thread.sleep(10000);
+			logger.error("thread " + counter + "... terminated.");
 		}
 		catch(Exception e) {
 			logger.error(e);
-		}
-		finally {
-			try {
-				if(in != null) in.close();
-				if(out != null) out.close();
-				if(incomingSocket != null) incomingSocket.close();
-			}
-			catch(Exception e) {
-				logger.error(e.getMessage());
-			}
 		}
 	}
 }

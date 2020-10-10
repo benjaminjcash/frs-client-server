@@ -22,22 +22,22 @@ public class FlightMgr {
 		flightSvc = (IFlightSvc) factory.getService(IFlightSvc.NAME);
 	}
 	
-	public Flight fetchFlight(String flightNumber) throws ServiceLoadException {
+	public synchronized Flight fetchFlight(String flightNumber) throws ServiceLoadException {
 		setup();
 		return flightSvc.fetchFlight(flightNumber);
 	}
 	
-	public boolean publishFlight(Flight flight) throws ServiceLoadException { 
+	public synchronized boolean publishFlight(Flight flight) throws ServiceLoadException { 
 		setup();
 		return flightSvc.publishFlight(flight);
 	}
 	
-	public boolean deleteFlight(String flightNumber) throws ServiceLoadException {
+	public synchronized boolean deleteFlight(String flightNumber) throws ServiceLoadException {
 		setup();
 		return flightSvc.deleteFlight(flightNumber);
 	}
 	
-	public ArrayList<Flight> fetchAllFlights() throws ServiceLoadException {
+	public synchronized ArrayList<Flight> fetchAllFlights() throws ServiceLoadException {
 		setup();
 		return flightSvc.fetchAllFlights();
 	}

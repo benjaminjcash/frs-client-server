@@ -15,22 +15,22 @@ public class TravelerMgr {
 		travelerSvc = (ITravelerSvc) factory.getService(ITravelerSvc.NAME);
 	}
 	
-	public boolean createProfile(Traveler traveler) throws ServiceLoadException, ClassNotFoundException, IOException {
+	public synchronized boolean createProfile(Traveler traveler) throws ServiceLoadException, ClassNotFoundException, IOException {
 		setup();
 		return travelerSvc.createProfile(traveler);
 	}
 	
-	public Traveler fetchProfile(String username) throws ServiceLoadException {
+	public synchronized Traveler fetchProfile(String username) throws ServiceLoadException {
 		setup();
 		return travelerSvc.fetchProfile(username);
 	}
 	
-	public boolean deleteProfile(String username) throws ServiceLoadException {
+	public synchronized boolean deleteProfile(String username) throws ServiceLoadException {
 		setup();
 		return travelerSvc.deleteProfile(username);
 	}
 	
-	public ArrayList<Traveler> fetchAllProfiles() throws ServiceLoadException {
+	public synchronized ArrayList<Traveler> fetchAllProfiles() throws ServiceLoadException {
 		setup();
 		return travelerSvc.fetchAllProfiles();
 	}

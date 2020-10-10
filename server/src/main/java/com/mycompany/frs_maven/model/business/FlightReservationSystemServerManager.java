@@ -19,7 +19,7 @@ public class FlightReservationSystemServerManager extends BaseServerManager {
 		return _instance;
 	}
 	
-	public DTO performAction(DTO dtoIn) {
+	public synchronized DTO performAction(DTO dtoIn) {
 		DTO dtoOut = new DTO();
 		Boolean status = false;
 		
