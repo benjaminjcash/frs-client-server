@@ -1,21 +1,25 @@
 package com.mycompany.frs_maven.model.business;
 
 import com.mycompany.frs_maven.model.exceptions.RecordNotFoundException;
+
 import com.mycompany.frs_maven.model.exceptions.ServiceLoadException;
 import com.mycompany.frs_maven.model.exceptions.WrongPasswordException;
-import com.mycompany.frs_maven.model.service.Factory;
 import com.mycompany.frs_maven.model.service.ILoginSvc;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class LoginMgr {
 	private ILoginSvc loginSvc;
-	private void setup() throws ServiceLoadException {
-		Factory factory = Factory.getInstance();
-		loginSvc = (ILoginSvc) factory.getService(ILoginSvc.NAME);
+	
+	@Autowired
+	public void setLoginService(ILoginSvc loginSvc) {
+		this.loginSvc = loginSvc;
 	}
 	
 	public synchronized boolean login(String username, String password) throws RecordNotFoundException, WrongPasswordException, ServiceLoadException {
-		setup();
-		return loginSvc.login(username, password);
+		return this.loginSvc.login(username, password);
 	}
 }
  

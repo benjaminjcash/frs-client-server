@@ -2,8 +2,11 @@ package com.mycompany.frs_maven.model.business;
 
 import java.util.ArrayList;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.mycompany.frs_maven.configuration.DIConfiguration;
 import com.mycompany.frs_maven.model.domain.DTO;
 import com.mycompany.frs_maven.model.domain.Flight;
 import com.mycompany.frs_maven.model.domain.Traveler;
@@ -22,10 +25,12 @@ public class FlightReservationSystemServerManager extends BaseServerManager {
 	public synchronized DTO performAction(DTO dtoIn) {
 		DTO dtoOut = new DTO();
 		Boolean status = false;
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DIConfiguration.class);
 		
 		try {
-			FlightMgr flightManager = new FlightMgr();
-			TravelerMgr travelerManager = new TravelerMgr();
+			
+			FlightMgr flightManager = context.getBean(FlightMgr.class);
+			TravelerMgr travelerManager =context.getBean(TravelerMgr.class);
 			switch(dtoIn.getCommandString()) {
 				case "fetchAllFlights":
 					ArrayList<Flight> fetchedFlights = flightManager.fetchAllFlights();
@@ -71,6 +76,7 @@ public class FlightReservationSystemServerManager extends BaseServerManager {
 			logger.error(e.getMessage());
 		}
 		
+		context.close();
 		dtoOut.setStatus(status);
 		return dtoOut;
 	}

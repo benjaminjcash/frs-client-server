@@ -1,37 +1,46 @@
 package com.mycompany.frs_maven.model.business;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.mycompany.frs_maven.model.domain.Traveler;
+import com.mycompany.frs_maven.model.exceptions.RecordNotFoundException;
 import com.mycompany.frs_maven.model.exceptions.ServiceLoadException;
-import com.mycompany.frs_maven.model.service.Factory;
 import com.mycompany.frs_maven.model.service.ITravelerSvc;
 
+@Component
 public class TravelerMgr {
 	private ITravelerSvc travelerSvc;
-	private void setup() throws ServiceLoadException {
-		Factory factory = Factory.getInstance();
-		travelerSvc = (ITravelerSvc) factory.getService(ITravelerSvc.NAME);
+	
+	@Autowired
+	public void setTravelerService(ITravelerSvc travelerSvc) {
+		this.travelerSvc = travelerSvc;
 	}
 	
 	public synchronized boolean createProfile(Traveler traveler) throws ServiceLoadException, ClassNotFoundException, IOException {
-		setup();
-		return travelerSvc.createProfile(traveler);
+		return this.travelerSvc.createProfile(traveler);
 	}
 	
 	public synchronized Traveler fetchProfile(String username) throws ServiceLoadException {
-		setup();
-		return travelerSvc.fetchProfile(username);
+		return this.travelerSvc.fetchProfile(username);
 	}
 	
 	public synchronized boolean deleteProfile(String username) throws ServiceLoadException {
-		setup();
-		return travelerSvc.deleteProfile(username);
+		return this.travelerSvc.deleteProfile(username);
+	}
+	
+	public synchronized boolean updateProfile(Traveler traveler) throws RecordNotFoundException {
+		return this.travelerSvc.updateProfile(traveler);
 	}
 	
 	public synchronized ArrayList<Traveler> fetchAllProfiles() throws ServiceLoadException {
-		setup();
-		return travelerSvc.fetchAllProfiles();
+		return this.travelerSvc.fetchAllProfiles();
+	}
+	
+	public synchronized void printAllTravelers() throws ClassNotFoundException, IOException, RecordNotFoundException {
+		this.travelerSvc.printAllTravelers();
 	}
 }
